@@ -150,6 +150,9 @@
   .work-ico svg{width:34%;height:auto;max-width:88px}
   .work.a .work-ico{color:var(--sakura)}
   .work.b .work-ico{color:var(--ink)}
+  .work-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .55s ease}
+  .work:hover .work-img{transform:scale(1.055)}
+  .work-cap{position:relative;z-index:1}
   .works-note{margin-top:18px;font-size:.82rem;color:var(--stone)}
   @media (max-width:820px){.work-grid{grid-template-columns:1fr 1fr}}
   @media (max-width:520px){.work-grid{grid-template-columns:1fr}}
@@ -288,35 +291,35 @@
       <div class="section-head reveal">
         <p class="eyebrow" data-i18n="works.eyebrow">Selected Work</p>
         <h2 data-i18n="works.title">実績</h2>
-        <p class="lead" data-i18n="works.lead">現場の仕事は、写真がいちばん雄弁です。実際のプロジェクトを掲載していきます。</p>
+        <p class="lead" data-i18n="works.lead">現場の仕事は、写真がいちばん雄弁です。実際に手がけた内装・水回りリフォームの一部をご紹介します。</p>
       </div>
       <div class="work-grid reveal">
-        <div class="work a">
-          <div class="work-ico" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><rect x="9" y="10" width="24" height="16" rx="1.5"/><path d="M33 12l5 3.5v15L33 27"/><path d="M13 26v11M31 26v11"/><path d="M14 16h14M14 20h9"/></svg></div>
-          <div class="work-cap"><span class="t" data-i18n="w1">3Dサイン・表札</span><span class="ph" data-i18n="ph">写真準備中</span></div>
+        <div class="work">
+          <img class="work-img" src="works/w1_powder.jpg" alt="商業施設 化粧室リフォーム" loading="lazy" width="1400" height="1050">
+          <div class="work-cap"><span class="t" data-i18n="w1">商業施設 化粧室リフォーム</span></div>
         </div>
         <div class="work">
-          <div class="work-ico" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M8 23l16-13 16 13"/><path d="M12 21v17h24V21"/><rect x="20" y="28" width="8" height="10"/></svg></div>
-          <div class="work-cap"><span class="t" data-i18n="w2">民泊リノベーション</span><span class="ph" data-i18n="ph">写真準備中</span></div>
-        </div>
-        <div class="work b">
-          <div class="work-ico" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M9 19l3-7h24l3 7"/><path d="M11 19v19h26V19"/><path d="M9 19h30"/><rect x="15" y="25" width="8" height="13"/><rect x="27" y="25" width="7" height="7"/></svg></div>
-          <div class="work-cap"><span class="t" data-i18n="w3">店舗内装</span><span class="ph" data-i18n="ph">写真準備中</span></div>
-        </div>
-        <div class="work b">
-          <div class="work-ico" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><rect x="8" y="12" width="32" height="6" rx="1.2"/><rect x="8" y="21" width="32" height="6" rx="1.2"/><rect x="8" y="30" width="32" height="6" rx="1.2"/><path d="M19 12v6M31 21v6M15 30v6"/></svg></div>
-          <div class="work-cap"><span class="t" data-i18n="w4">建材・ウッドパネル</span><span class="ph" data-i18n="ph">写真準備中</span></div>
-        </div>
-        <div class="work a">
-          <div class="work-ico" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><circle cx="24" cy="24" r="14"/><circle cx="24" cy="24" r="5.5"/><path d="M24 10v8.5M24 29.5V38M10 24h8.5M29.5 24H38"/></svg></div>
-          <div class="work-cap"><span class="t" data-i18n="w5">和風表札・家紋サイン</span><span class="ph" data-i18n="ph">写真準備中</span></div>
+          <img class="work-img" src="works/w2_vanity.jpg" alt="多目的パウダールーム" loading="lazy" width="1400" height="1050">
+          <div class="work-cap"><span class="t" data-i18n="w2">多目的パウダールーム</span></div>
         </div>
         <div class="work">
-          <div class="work-ico" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><rect x="9" y="10" width="30" height="28" rx="2"/><path d="M9 18h30"/><path d="M14 32l5-7 5 4 6-9"/></svg></div>
-          <div class="work-cap"><span class="t" data-i18n="w6">AI民泊ダッシュボード</span><span class="ph" data-i18n="ph">写真準備中</span></div>
+          <img class="work-img" src="works/w3_office_wc.jpg" alt="オフィストイレ改装" loading="lazy" width="1400" height="1050">
+          <div class="work-cap"><span class="t" data-i18n="w3">オフィストイレ改装</span></div>
+        </div>
+        <div class="work">
+          <img class="work-img" src="works/w4_barrierfree.jpg" alt="バリアフリートイレ" loading="lazy" width="1400" height="1050">
+          <div class="work-cap"><span class="t" data-i18n="w4">バリアフリートイレ</span></div>
+        </div>
+        <div class="work">
+          <img class="work-img" src="works/w5_office.jpg" alt="オフィス内装" loading="lazy" width="1400" height="1050">
+          <div class="work-cap"><span class="t" data-i18n="w5">オフィス内装</span></div>
+        </div>
+        <div class="work">
+          <img class="work-img" src="works/w6_steeldoor.jpg" alt="スチールドア・建具施工" loading="lazy" width="1400" height="1050">
+          <div class="work-cap"><span class="t" data-i18n="w6">スチールドア・建具施工</span></div>
         </div>
       </div>
-      <p class="works-note" data-i18n="works.note">※ 施工写真・プロジェクト画像をこちらに掲載します。写真をご共有ください。</p>
+      <p class="works-note" data-i18n="works.note">※ 掲載写真はすべて自社施工の実績です。より詳しい事例はお問い合わせください。</p>
     </div>
   </section>
 
@@ -424,9 +427,9 @@
       "f3s1.t":"中日貿易","f3s1.d":"中国語ネイティブと現地ネットワークで、仕入れ・交渉・輸入をワンストップ。",
       "f3s2.t":"多言語コンテンツ","f3s2.d":"日本のリノベ情報を日中英で発信。YouTube・TikTok・小紅書で海外に届けます。",
       "f3s3.t":"Web・予約システム構築","f3s3.d":"多言語サイトと、オンライン予約・決済まで。民泊・店舗の集客導線を一式で。",
-      "works.eyebrow":"Selected Work","works.title":"実績","works.lead":"現場の仕事は、写真がいちばん雄弁です。実際のプロジェクトを掲載していきます。",
-      "w1":"3Dサイン・表札","w2":"民泊リノベーション","w3":"店舗内装","w4":"建材・ウッドパネル","w5":"和風表札・家紋サイン","w6":"AI民泊ダッシュボード","ph":"写真準備中",
-      "works.note":"※ 施工写真・プロジェクト画像をこちらに掲載します。写真をご共有ください。",
+      "works.eyebrow":"Selected Work","works.title":"実績","works.lead":"現場の仕事は、写真がいちばん雄弁です。実際に手がけた内装・水回りリフォームの一部をご紹介します。",
+      "w1":"商業施設 化粧室リフォーム","w2":"多目的パウダールーム","w3":"オフィストイレ改装","w4":"バリアフリートイレ","w5":"オフィス内装","w6":"スチールドア・建具施工",
+      "works.note":"※ 掲載写真はすべて自社施工の実績です。より詳しい事例はお問い合わせください。",
       "scan.eyebrow":"Instant Estimate","scan.title":"スマホでスキャンするだけ、お見積り。",
       "scan.body":"LiDARスキャンで現地を3Dデータ化し、内装・建材のお見積りをスピーディに。現地調査の往復を減らし、意思決定を早めます。",
       "scan.cta":"見積りを相談する",
@@ -459,9 +462,9 @@
       "f3s1.t":"中日贸易","f3s1.d":"以中文母语与本地网络，采购・谈判・进口一站式。",
       "f3s2.t":"多语言内容","f3s2.d":"以中日英输出日本装修资讯，通过 YouTube・TikTok・小红书触达海外。",
       "f3s3.t":"网站・预订系统构建","f3s3.d":"多语言网站，直到在线预订・收款一整套，民宿・店铺获客导线全包。",
-      "works.eyebrow":"Selected Work","works.title":"实绩","works.lead":"现场的活儿，照片最有说服力。真实项目将陆续上载。",
-      "w1":"3D标识・门牌","w2":"民宿改造","w3":"店铺内装","w4":"建材・木饰面板","w5":"和风门牌・家纹标识","w6":"AI民宿看板","ph":"照片准备中",
-      "works.note":"※ 施工照片・项目图片将展示于此，请提供照片。",
+      "works.eyebrow":"Selected Work","works.title":"实绩","works.lead":"现场的活儿，照片最有说服力。以下是我们实际施工的内装・水回改装案例节选。",
+      "w1":"商业设施 化妆室改装","w2":"多功能洗手台","w3":"办公室卫生间改装","w4":"无障碍卫生间","w5":"办公室内装","w6":"钢制门・门窗施工",
+      "works.note":"※ 所列照片均为本公司施工实绩，更多案例欢迎咨询。",
       "scan.eyebrow":"Instant Estimate","scan.title":"手机扫一下，就出报价。",
       "scan.body":"用 LiDAR 扫描把现场三维数据化，内装・建材报价更快，减少现场往返，加速决策。",
       "scan.cta":"咨询报价",
@@ -494,9 +497,9 @@
       "f3s1.t":"CN–JP Trade","f3s1.d":"Native Chinese and on-the-ground networks for end-to-end sourcing, negotiation, and import.",
       "f3s2.t":"Multilingual Content","f3s2.d":"Japan renovation content in JP/CN/EN, delivered via YouTube, TikTok, and RED.",
       "f3s3.t":"Web & Booking Build","f3s3.d":"Multilingual sites through to online booking and payment — full acquisition funnels for stays and shops.",
-      "works.eyebrow":"Selected Work","works.title":"Our Work","works.lead":"On-site work speaks loudest in photos. Real projects will be added here.",
-      "w1":"3D Signage","w2":"Guesthouse Renovation","w3":"Shop Interior","w4":"Materials & Panels","w5":"Japanese Nameplates","w6":"AI Guesthouse Dashboard","ph":"Photo coming",
-      "works.note":"※ Project photos will be featured here — please share your images.",
+      "works.eyebrow":"Selected Work","works.title":"Our Work","works.lead":"On-site work speaks loudest in photos. A selection of interior and washroom renovations we have delivered.",
+      "w1":"Commercial Powder Room","w2":"Multipurpose Vanity","w3":"Office Restroom Renovation","w4":"Barrier-Free Restroom","w5":"Office Interior","w6":"Steel Door Installation",
+      "works.note":"※ All photos are our own completed projects. Contact us for more case studies.",
       "scan.eyebrow":"Instant Estimate","scan.title":"Just scan with your phone — get an estimate.",
       "scan.body":"LiDAR scanning turns a site into 3D data for fast interior and materials estimates — fewer site visits, quicker decisions.",
       "scan.cta":"Ask about an estimate",
