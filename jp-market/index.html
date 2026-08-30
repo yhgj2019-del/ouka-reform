@@ -106,6 +106,27 @@
   .cc-rows div .k{font-size:12px;color:#8ea1bd;letter-spacing:.15em;margin-bottom:4px;}
   .cc-rows div .v{font-size:18px;font-weight:600;}
 
+  /* start / form */
+  .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:38px;}
+  .step{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:22px 20px;position:relative;}
+  .step .n{display:inline-flex;width:26px;height:26px;border-radius:50%;background:var(--gold);color:#fff;font-size:13px;font-weight:700;align-items:center;justify-content:center;margin-bottom:10px;}
+  .step h4{font-size:16.5px;font-weight:700;margin-bottom:6px;}
+  .step p{font-size:14px;color:var(--muted);}
+  .formwrap{display:grid;grid-template-columns:1.15fr .85fr;gap:28px;align-items:start;}
+  .form-card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:32px;}
+  .form-card h3{font-size:21px;font-weight:800;margin-bottom:6px;}
+  .form-card .hint{font-size:13.5px;color:var(--muted);margin-bottom:22px;}
+  .fld{margin-bottom:16px;}
+  .fld label{display:block;font-size:13px;font-weight:600;margin-bottom:6px;color:#3a4657;}
+  .fld label .req{color:#c0392b;margin-left:3px;}
+  .fld input,.fld textarea,.fld select{width:100%;border:1px solid var(--line);border-radius:8px;padding:11px 13px;font-size:15px;font-family:inherit;color:var(--ink);background:var(--paper);}
+  .fld input:focus,.fld textarea:focus,.fld select:focus{outline:none;border-color:var(--gold);background:#fff;}
+  .fld textarea{min-height:96px;resize:vertical;}
+  .fld .note{font-size:12px;color:#98a2b0;margin-top:5px;}
+  .submit{width:100%;background:var(--ink);color:#fff;border:0;border-radius:8px;padding:15px;font-size:16px;font-weight:700;cursor:pointer;font-family:inherit;transition:.2s;}
+  .submit:hover{background:var(--ink-2);}
+  .privacy{font-size:12px;color:#98a2b0;margin-top:12px;line-height:1.7;}
+  @media(max-width:820px){.steps{grid-template-columns:1fr;}.formwrap{grid-template-columns:1fr;}}
   footer{background:#0f1a2c;color:#8794a8;padding:34px 0;font-size:13px;}
   .foot-in{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;}
 
@@ -125,7 +146,7 @@
 
 <nav><div class="wrap nav-in">
   <a class="brand" href="#top"><img src="../logo.jpg" alt="桜華"><span>桜華国際株式会社<small>日本市场落地服务</small></span></a>
-  <a class="nav-cta" href="#contact">联系我们</a>
+  <a class="nav-cta" href="#start">免费速判</a>
 </div></nav>
 
 <header class="hero" id="top"><div class="wrap">
@@ -135,7 +156,7 @@
   <p class="lead">不是做一份报告就走的咨询公司，是能在日本替你对接、测试、谈单、跟单的<b style="color:#e6b98f">在地实操代表</b>。</p>
   <div class="btns">
     <a class="btn btn-p" href="#services">看我们能做什么</a>
-    <a class="btn btn-o" href="#meet">8月大阪 · 展会见面</a>
+    <a class="btn btn-o" href="#start">先要一份免费速判</a>
     <a class="btn btn-o" href="/case/station-restroom/">看我们的施工现场</a>
   </div>
 </div></header>
@@ -198,7 +219,7 @@
     <div class="sample-cta">
       <h4>想看你自己品类的版本？</h4>
       <p>把你的产品和目标告诉我们，先出一份针对你的诊断——这就是合作的第一步。</p>
-      <a class="btn btn-p" href="#contact">要一份诊断</a>
+      <a class="btn btn-p" href="#start">先要免费速判</a>
     </div>
   </div>
 </div></section>
@@ -219,22 +240,70 @@
   </a>
 </div></section>
 
-<!-- 见面 -->
-<section class="meet" id="meet"><div class="wrap">
-  <div class="sec-label">现在就能见面</div>
-  <h2 class="sec-title">8 月，我们在大阪等你</h2>
-  <p class="sec-intro">展会现场当面聊最快。带上你的产品资料，我们现场就能给你初步判断。</p>
-  <div class="events">
-    <div class="ev"><div class="d">8/25 – 8/27</div><h4>中国遼寧省輸出商品展示会</h4><p>大阪 マイドームおおさか · 商談マッチング预约制</p></div>
-    <div class="ev"><div class="d">8/27 – 8/29</div><h4>JAPAN DIY HOMECENTER SHOW</h4><p>幕张メッセ · 五金/DIY/建材 · 已有中国厂商参展</p></div>
+<!-- 开始 -->
+<section class="meet" id="start"><div class="wrap">
+  <div class="sec-label">从这里开始</div>
+  <h2 class="sec-title">先免费给你一份「一页纸速判」</h2>
+  <p class="sec-intro">不用先付钱，也不用先签约。把你的产品告诉我们，我们先出一页：日本同类卖多少钱、主要走哪个渠道、有没有认证门槛、值不值得进。看得上，再谈后面的事。</p>
+
+  <div class="steps">
+    <div class="step"><span class="n">1</span><h4>你告诉我们产品</h4><p>填下面的表，或直接加微信。有 1688／阿里国际站链接最好，我们自己看规格。</p></div>
+    <div class="step"><span class="n">2</span><h4>我们出一页速判</h4><p>日本同类价格带、渠道、认证门槛、第一判断。<b>免费，不收费</b>。</p></div>
+    <div class="step"><span class="n">3</span><h4>合适再谈正式诊断</h4><p>方向对了，再做完整的《日本市场诊断报告》和后面的落地服务。不合适就到此为止。</p></div>
   </div>
-  <div class="contact-card" id="contact">
-    <h3>聊聊你的日本市场</h3>
-    <p>微信 / 电话 / 邮件都行，中文直接说。</p>
-    <div class="cc-rows">
-      <div><div class="k">微信 WeChat</div><div class="v">ouka-reform</div></div>
-      <div><div class="k">电话 TEL</div><div class="v">090-8527-5777</div></div>
-      <div><div class="k">邮箱 EMAIL</div><div class="v">info@ouka-reform.jp</div></div>
+
+  <div class="formwrap">
+    <div class="form-card">
+      <h3>要一份免费速判</h3>
+      <p class="hint">填完直接发到我们手上。中文写就行，一般 1–2 个工作日回你。</p>
+
+      <form action="https://formsubmit.co/yhgj2019@gmail.com" method="POST">
+        <input type="hidden" name="_subject" value="【网站询盘】日本市场速判申请">
+        <input type="hidden" name="_captcha" value="false">
+        <input type="hidden" name="_template" value="table">
+        <input type="hidden" name="_next" value="https://ouka-reform.jp/jp-market/thanks/">
+        <input type="text" name="_honey" style="display:none">
+
+        <div class="fld">
+          <label>公司名称<span class="req">*</span></label>
+          <input type="text" name="公司名称" required placeholder="例：大连XX建材科技有限公司">
+        </div>
+        <div class="fld">
+          <label>联系人<span class="req">*</span></label>
+          <input type="text" name="联系人" required placeholder="您怎么称呼">
+        </div>
+        <div class="fld">
+          <label>微信号<span class="req">*</span></label>
+          <input type="text" name="微信号" required placeholder="我们主要用微信联系">
+          <p class="note">图纸、照片、样品资料，加上微信直接发最快。</p>
+        </div>
+        <div class="fld">
+          <label>产品品类<span class="req">*</span></label>
+          <input type="text" name="产品品类" required placeholder="例：SPC地板 / 塑钢型材 / 五金 / 涂料">
+        </div>
+        <div class="fld">
+          <label>产品链接</label>
+          <input type="text" name="产品链接" placeholder="1688 / 阿里国际站 / 官网，都可以">
+        </div>
+        <div class="fld">
+          <label>你现在最想知道什么</label>
+          <textarea name="想知道什么" placeholder="例：我这款地板在日本能卖多少钱？需要什么认证？该找谁卖？"></textarea>
+        </div>
+
+        <button type="submit" class="submit">提交，要一份免费速判</button>
+        <p class="privacy">※ 我们只用这些信息做市场判断和联系你，不会转给第三方。产品资料在正式合作前不对外披露。</p>
+      </form>
+    </div>
+
+    <div class="contact-card" id="contact" style="padding:34px 28px;">
+      <h3 style="font-size:22px;">不想填表？直接聊</h3>
+      <p style="font-size:14.5px;">加微信最快，中文直接说。</p>
+      <div class="cc-rows" style="flex-direction:column;gap:20px;">
+        <div><div class="k">微信 WeChat</div><div class="v">ouka-reform</div></div>
+        <div><div class="k">电话 TEL</div><div class="v">+81 90-8527-5777</div></div>
+        <div><div class="k">所在地</div><div class="v" style="font-size:15px;">日本 · 大阪</div></div>
+      </div>
+      <p style="color:#8ea1bd;font-size:12.5px;margin-top:24px;line-height:1.7;">日本时间 09:00–19:00。<br>时差比北京快 1 小时。</p>
     </div>
   </div>
 </div></section>
