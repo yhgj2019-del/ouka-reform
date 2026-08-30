@@ -548,7 +548,25 @@
     document.querySelectorAll('[data-i18n]').forEach(function(el){var k=el.getAttribute('data-i18n'); if(d[k]!=null) el.textContent=d[k];});
     document.querySelectorAll('.lang-btn').forEach(function(b){b.classList.toggle('is-active',b.getAttribute('data-lang')===l);});
   }
-  document.querySelectorAll('.lang-btn').forEach(function(b){b.addEventListener('click',function(){setLang(b.getAttribute('data-lang'));});});
+  document.querySelectorAll('.lang-btn').forEach(function(b){b.addEventListener('click',function(){
+    var l=b.getAttribute('data-lang');
+    setLang(l);
+    try{localStorage.setItem('ouka_lang',l);}catch(e){}
+  });});
+
+  /* 初回表示: 保存済み設定 → なければブラウザ言語で自動判定
+     中国語ブラウザに日本語ページを出すと Chrome の自動翻訳が住所や
+     ボタン名まで壊すため（例: みずほコート→瑞穂法庭）、最初から正しい
+     言語で出す。html@lang が一致すれば Chrome は翻訳を提案しない。 */
+  (function(){
+    var saved=null;
+    try{saved=localStorage.getItem('ouka_lang');}catch(e){}
+    if(saved && I18N[saved]){ setLang(saved); return; }
+    var n=((navigator.languages&&navigator.languages[0])||navigator.language||'ja').toLowerCase();
+    if(n.indexOf('zh')===0){ setLang('zh'); }
+    else if(n.indexOf('ja')===0){ /* 既定の日本語のまま */ }
+    else{ setLang('en'); }
+  })();
 
   /* mobile nav */
   var tog=document.querySelector('.nav-toggle'),nav=document.getElementById('nav');
