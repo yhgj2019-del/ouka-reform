@@ -1,0 +1,543 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>M HOTEL ｜ 大阪・島之内 ｜ 公式サイト</title>
+<meta name="description" content="M HOTEL 大阪・島之内。公式サイトからの直接予約が最もお得です。日本語・English・中文・한국어対応。WeChat／LINE／WhatsAppで直接ご相談いただけます。">
+<link rel="canonical" href="https://ouka-reform.jp/m-hotel/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="M HOTEL ｜ 大阪・島之内 ｜ 公式サイト">
+<meta property="og:description" content="公式サイトからの直接予約が最もお得です。">
+<meta property="og:image" content="https://ouka-reform.jp/m-hotel/assets/hero.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500&family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#1a1a1a; --ink-2:#4a4a4a; --ink-3:#8a8a8a;
+  --paper:#fbfaf8; --line:#e3dfd8; --gold:#a8853f; --gold-lt:#c9a961;
+  --dark:#14130f;
+  --max:1180px;
+  --serif:"Cormorant Garamond",serif;
+  --sans:"Noto Sans JP",-apple-system,BlinkMacSystemFont,"Hiragino Sans",sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--sans);color:var(--ink);background:var(--paper);line-height:1.85;font-weight:300;-webkit-font-smoothing:antialiased}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:var(--max);margin:0 auto;padding:0 28px}
+.en{font-family:var(--serif);letter-spacing:.22em;text-transform:uppercase;font-weight:400}
+
+/* ── nav ── */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:20px 0;transition:.4s;mix-blend-mode:difference}
+nav.solid{mix-blend-mode:normal;background:rgba(251,250,248,.94);backdrop-filter:blur(14px);border-bottom:1px solid var(--line);padding:13px 0}
+.nav-in{max-width:var(--max);margin:0 auto;padding:0 28px;display:flex;align-items:center;justify-content:space-between;gap:20px}
+.brand{font-family:var(--serif);font-size:23px;letter-spacing:.3em;color:#fff;transition:.4s}
+nav.solid .brand{color:var(--ink)}
+.nav-r{display:flex;align-items:center;gap:26px}
+.nav-links{display:flex;gap:26px}
+.nav-links a{font-size:12.5px;letter-spacing:.13em;color:#fff;opacity:.88;transition:.3s}
+nav.solid .nav-links a{color:var(--ink-2)}
+.nav-links a:hover{opacity:1;color:var(--gold-lt)}
+.lang{display:flex;gap:3px;align-items:center}
+.lang button{background:none;border:0;font-family:var(--sans);font-size:11px;letter-spacing:.08em;color:#fff;opacity:.55;cursor:pointer;padding:5px 7px;transition:.25s;border-radius:2px}
+nav.solid .lang button{color:var(--ink-3)}
+.lang button:hover{opacity:1}
+.lang button.on{opacity:1;color:var(--gold-lt);font-weight:500}
+nav.solid .lang button.on{color:var(--gold)}
+.burger{display:none;background:none;border:0;cursor:pointer;padding:6px}
+.burger span{display:block;width:22px;height:1.5px;background:#fff;margin:5px 0;transition:.3s}
+nav.solid .burger span{background:var(--ink)}
+
+/* ── hero ── */
+header{height:100svh;min-height:560px;position:relative;display:flex;align-items:flex-end;overflow:hidden}
+header img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+header::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.42) 0%,rgba(0,0,0,.05) 42%,rgba(0,0,0,.72) 100%)}
+.hero-c{position:relative;z-index:2;width:100%;padding-bottom:9vh}
+.hero-c .sup{font-family:var(--serif);letter-spacing:.4em;font-size:12px;color:var(--gold-lt);text-transform:uppercase;margin-bottom:22px}
+.hero-c h1{font-family:var(--serif);font-size:clamp(42px,8vw,86px);font-weight:300;color:#fff;letter-spacing:.16em;line-height:1.08}
+.hero-c .sub{color:rgba(255,255,255,.9);font-size:clamp(14px,2.2vw,17px);margin-top:22px;font-weight:300;letter-spacing:.05em;max-width:34em}
+.hero-cta{margin-top:38px;display:flex;gap:13px;flex-wrap:wrap}
+.btn{display:inline-block;padding:15px 34px;font-size:13px;letter-spacing:.14em;border:1px solid var(--gold-lt);color:var(--gold-lt);transition:.35s;cursor:pointer;background:none;font-family:var(--sans);font-weight:400}
+.btn:hover{background:var(--gold-lt);color:#14130f}
+.btn.fill{background:var(--gold-lt);color:#14130f}
+.btn.fill:hover{background:#fff;border-color:#fff}
+.btn.dk{border-color:var(--gold);color:var(--gold)}
+.btn.dk:hover{background:var(--gold);color:#fff}
+
+/* ── sections ── */
+section{padding:clamp(76px,11vw,132px) 0}
+.sec-h{margin-bottom:54px}
+.sec-h .lbl{font-family:var(--serif);letter-spacing:.34em;font-size:11.5px;color:var(--gold);text-transform:uppercase;margin-bottom:15px}
+.sec-h h2{font-size:clamp(25px,3.7vw,36px);font-weight:300;letter-spacing:.07em;line-height:1.45}
+.sec-h p{color:var(--ink-2);margin-top:17px;max-width:40em;font-size:15px}
+
+/* ── direct ── */
+.direct{background:var(--dark);color:#fff}
+.direct .sec-h h2{color:#fff}
+.direct .sec-h p{color:rgba(255,255,255,.62)}
+.dgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(238px,1fr));gap:1px;background:rgba(255,255,255,.11);border:1px solid rgba(255,255,255,.11)}
+.dcell{background:var(--dark);padding:38px 30px}
+.dcell .n{font-family:var(--serif);font-size:12px;letter-spacing:.28em;color:var(--gold-lt);margin-bottom:17px}
+.dcell h3{font-size:17px;font-weight:400;letter-spacing:.04em;margin-bottom:11px}
+.dcell p{font-size:13.5px;color:rgba(255,255,255,.6);line-height:1.8}
+
+/* ── properties ── */
+.props{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:30px}
+.prop{background:#fff;border:1px solid var(--line);transition:.4s;overflow:hidden}
+.prop:hover{box-shadow:0 14px 44px rgba(0,0,0,.09);transform:translateY(-3px)}
+.prop .ph{aspect-ratio:4/3;overflow:hidden;background:#eee}
+.prop .ph img{width:100%;height:100%;object-fit:cover;transition:.7s}
+.prop:hover .ph img{transform:scale(1.05)}
+.prop .bd{padding:27px}
+.tag{display:inline-block;font-size:10.5px;letter-spacing:.15em;padding:4px 11px;border:1px solid var(--gold);color:var(--gold);margin-bottom:14px}
+.tag.soon{border-color:var(--ink-3);color:var(--ink-3)}
+.prop h3{font-size:20px;font-weight:400;letter-spacing:.05em;margin-bottom:7px}
+.prop .loc{font-size:12.5px;color:var(--ink-3);letter-spacing:.05em;margin-bottom:13px}
+.prop p{font-size:13.5px;color:var(--ink-2)}
+
+/* ── gallery ── */
+.gal{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:10px}
+.gal a{overflow:hidden;aspect-ratio:3/2;background:#eee;display:block}
+.gal a:nth-child(1),.gal a:nth-child(8){grid-column:span 2;aspect-ratio:3/2}
+.gal img{width:100%;height:100%;object-fit:cover;transition:.75s}
+.gal a:hover img{transform:scale(1.06)}
+
+/* ── members ── */
+.members{background:#fff;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.mgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:34px;margin-top:42px}
+.mi .ic{font-family:var(--serif);font-size:34px;color:var(--gold-lt);line-height:1;margin-bottom:15px}
+.mi h3{font-size:15.5px;font-weight:500;letter-spacing:.04em;margin-bottom:8px}
+.mi p{font-size:13.5px;color:var(--ink-2)}
+
+/* ── contact ── */
+.chan{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:13px;margin-top:36px}
+.ch{border:1px solid var(--line);background:#fff;padding:26px 20px;text-align:center;transition:.35s;cursor:pointer}
+.ch:hover{border-color:var(--gold);transform:translateY(-2px)}
+.ch .t{font-size:15px;font-weight:500;letter-spacing:.05em;margin-bottom:5px}
+.ch .d{font-size:12px;color:var(--ink-3)}
+form{margin-top:42px;display:grid;gap:15px;max-width:640px}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:15px}
+label{font-size:12px;letter-spacing:.09em;color:var(--ink-3);display:block;margin-bottom:6px}
+input,select,textarea{width:100%;padding:13px 15px;border:1px solid var(--line);background:#fff;font-family:var(--sans);font-size:14.5px;font-weight:300;color:var(--ink);border-radius:0}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--gold)}
+textarea{min-height:96px;resize:vertical}
+
+/* ── footer ── */
+footer{background:var(--dark);color:rgba(255,255,255,.58);padding:64px 0 34px;font-size:13px}
+.fgrid{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:44px;margin-bottom:44px}
+footer .bd{font-family:var(--serif);font-size:24px;letter-spacing:.3em;color:#fff;margin-bottom:15px}
+footer h4{font-size:11.5px;letter-spacing:.2em;color:var(--gold-lt);margin-bottom:15px;font-weight:400}
+footer li{list-style:none;margin-bottom:9px}
+footer a:hover{color:#fff}
+.fbot{border-top:1px solid rgba(255,255,255,.1);padding-top:24px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;font-size:11.5px;color:rgba(255,255,255,.38)}
+
+.lang button .mini{display:none}
+@media(max-width:860px){
+  .nav-links{display:none}
+  .burger{display:block}
+  .fgrid{grid-template-columns:1fr;gap:32px}
+  .gal a:nth-child(1),.gal a:nth-child(8){grid-column:span 1}
+  .row2{grid-template-columns:1fr}
+}
+@media(max-width:520px){
+  .nav-in{padding:0 18px;gap:10px}
+  .brand{font-size:17px;letter-spacing:.2em;white-space:nowrap}
+  .nav-r{gap:10px}
+  .lang{gap:0}
+  .lang button{padding:5px 4px;font-size:11px}
+  .lang button .full{display:none}
+  .lang button .mini{display:inline}
+  .hero-c{padding-bottom:7vh}
+  .hero-c h1{letter-spacing:.1em}
+  .hero-cta{gap:9px}
+  .btn{padding:13px 20px;font-size:12px}
+  .wrap{padding:0 18px}
+  .dcell{padding:30px 24px}
+  .prop .bd{padding:22px}
+  .gal{grid-template-columns:1fr 1fr;gap:6px}
+}
+</style>
+</head>
+<body>
+
+<nav id="nav">
+  <div class="nav-in">
+    <a href="#" class="brand">M HOTEL</a>
+    <div class="nav-r">
+      <div class="nav-links">
+        <a href="#stay" data-i="nav.stay">客室</a>
+        <a href="#properties" data-i="nav.prop">施設</a>
+        <a href="#direct" data-i="nav.direct">公式予約</a>
+        <a href="#members" data-i="nav.members">メンバーズ</a>
+        <a href="#contact" data-i="nav.contact">お問合せ</a>
+      </div>
+      <div class="lang" id="lang">
+        <button data-l="ja" class="on"><span class="full">日本語</span><span class="mini">日</span></button>
+        <button data-l="en"><span class="full">EN</span><span class="mini">EN</span></button>
+        <button data-l="zh"><span class="full">简体</span><span class="mini">简</span></button>
+        <button data-l="tw"><span class="full">繁體</span><span class="mini">繁</span></button>
+        <button data-l="ko"><span class="full">한국어</span><span class="mini">한</span></button>
+      </div>
+      <button class="burger" onclick="document.querySelector('.nav-links').style.display='flex'"><span></span><span></span></button>
+    </div>
+  </div>
+</nav>
+
+<header>
+  <img src="assets/hero.jpg" alt="M HOTEL 島之内 客室">
+  <div class="hero-c wrap">
+    <div class="sup">Osaka · Shimanouchi</div>
+    <h1>M HOTEL</h1>
+    <p class="sub" data-i="hero.sub">大阪・島之内。公式サイトからのご予約が、最もお得です。</p>
+    <div class="hero-cta">
+      <a href="#contact" class="btn fill" data-i="hero.book">公式サイトから予約</a>
+      <a href="#properties" class="btn" data-i="hero.see">施設を見る</a>
+    </div>
+  </div>
+</header>
+
+<section id="direct" class="direct">
+  <div class="wrap">
+    <div class="sec-h">
+      <div class="lbl">Book Direct</div>
+      <h2 data-i="direct.h">公式サイトから予約する理由</h2>
+      <p data-i="direct.p">予約サイトを通さずに、私たちと直接つながっていただけます。</p>
+    </div>
+    <div class="dgrid">
+      <div class="dcell"><div class="n">01</div><h3 data-i="d1.h">ベストレート</h3><p data-i="d1.p">予約サイトの手数料がかからない分、公式サイトが最も有利な価格です。</p></div>
+      <div class="dcell"><div class="n">02</div><h3 data-i="d2.h">母国語で直接相談</h3><p data-i="d2.p">WeChat・LINE・WhatsApp。ご予約前も滞在中も、使い慣れた方法で。</p></div>
+      <div class="dcell"><div class="n">03</div><h3 data-i="d3.h">柔軟な対応</h3><p data-i="d3.p">アーリーチェックイン、レイトチェックアウト、連泊のご相談を直接承ります。</p></div>
+      <div class="dcell"><div class="n">04</div><h3 data-i="d4.h">次回も、その次も</h3><p data-i="d4.p">一度お泊まりいただいた方には、次回以降のご予約を直接ご案内します。</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="properties">
+  <div class="wrap">
+    <div class="sec-h">
+      <div class="lbl">Our Properties</div>
+      <h2 data-i="prop.h">ひとつの名前で、増えていく滞在先。</h2>
+      <p data-i="prop.p">大阪・島之内を拠点に、順次拡げてまいります。</p>
+    </div>
+    <div class="props">
+      <div class="prop">
+        <div class="ph"><img src="assets/rooms/room-03.jpg" alt="M HOTEL 島之内"></div>
+        <div class="bd"><span class="tag" data-i="tag.open">営業中</span>
+          <h3>M HOTEL 島之内</h3>
+          <div class="loc">大阪市中央区島之内2-6-6</div>
+          <p data-i="p1.p">心斎橋・道頓堀へ徒歩圏。全室キッチン付きで、長期滞在にも。</p></div>
+      </div>
+      <div class="prop">
+        <div class="ph"><img src="assets/rooms/room-09.jpg" alt="M HOTEL 島之内 9F"></div>
+        <div class="bd"><span class="tag" data-i="tag.open">営業中</span>
+          <h3>M HOTEL 島之内 9F</h3>
+          <div class="loc">大阪市中央区島之内2-6-6</div>
+          <p data-i="p2.p">最上階。広めの間取りと眺望。ご家族・グループのご滞在に。</p></div>
+      </div>
+      <div class="prop">
+        <div class="ph"><img src="assets/rooms/room-14.jpg" alt="M HOTEL 堂ヶ芝"></div>
+        <div class="bd"><span class="tag soon" data-i="tag.soon">準備中</span>
+          <h3>M HOTEL 堂ヶ芝</h3>
+          <div class="loc">大阪市</div>
+          <p data-i="p3.p">全室改装済み。オープンに向けて準備を進めています。</p></div>
+      </div>
+      <div class="prop">
+        <div class="ph"><img src="assets/rooms/room-17.jpg" alt="M HOTEL 高津"></div>
+        <div class="bd"><span class="tag soon" data-i="tag.soon">準備中</span>
+          <h3>M HOTEL 高津</h3>
+          <div class="loc">大阪市中央区高津</div>
+          <p data-i="p4.p">次の M HOTEL。詳細は決まり次第ご案内いたします。</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="stay">
+  <div class="wrap">
+    <div class="sec-h">
+      <div class="lbl">The Rooms</div>
+      <h2 data-i="stay.h">住むように、泊まる。</h2>
+      <p data-i="stay.p">DAIKIN の空調、TOTO の水まわり、Panasonic の床。仕様は全室共通です。</p>
+    </div>
+    <div class="gal" id="gal"></div>
+  </div>
+</section>
+
+<section id="members" class="members">
+  <div class="wrap">
+    <div class="sec-h">
+      <div class="lbl">M Members</div>
+      <h2 data-i="mem.h">一度きりの旅を、続く関係に。</h2>
+      <p data-i="mem.p">ご登録は無料です。次回以降、公式サイトから直接ご予約いただけます。</p>
+    </div>
+    <div class="mgrid">
+      <div class="mi"><div class="ic">I</div><h3 data-i="m1.h">メンバー価格</h3><p data-i="m1.p">公式サイト限定の会員料金をご用意します。</p></div>
+      <div class="mi"><div class="ic">II</div><h3 data-i="m2.h">優先のご案内</h3><p data-i="m2.p">新しい M HOTEL の情報を、先にお届けします。</p></div>
+      <div class="mi"><div class="ic">III</div><h3 data-i="m3.h">滞在の記録</h3><p data-i="m3.p">前回のお部屋やご希望を覚えています。毎回お伝えいただく必要はありません。</p></div>
+      <div class="mi"><div class="ic">IV</div><h3 data-i="m4.h">直接のご連絡</h3><p data-i="m4.p">お使いのアプリで、担当者に直接ご相談いただけます。</p></div>
+    </div>
+    <div style="margin-top:44px"><a href="#contact" class="btn dk" data-i="mem.cta">メンバー登録について問い合わせる</a></div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="wrap">
+    <div class="sec-h">
+      <div class="lbl">Reservation &amp; Contact</div>
+      <h2 data-i="ct.h">ご予約・お問い合わせ</h2>
+      <p data-i="ct.p">お使いのアプリからそのままご連絡いただけます。フォームでも承ります。</p>
+    </div>
+    <div class="chan">
+      <a class="ch" href="https://wa.me/819085275777" target="_blank" rel="noopener"><div class="t">WhatsApp</div><div class="d">+81 90-8527-5777</div></a>
+      <a class="ch" href="tel:+819085275777"><div class="t" data-i="ch.tel">お電話</div><div class="d">+81 90-8527-5777</div></a>
+      <div class="ch" onclick="alert(T[L]['ch.wechat.id'])"><div class="t">WeChat 微信</div><div class="d" data-i="ch.soon">準備中</div></div>
+      <div class="ch" onclick="alert(T[L]['ch.line.id'])"><div class="t">LINE</div><div class="d" data-i="ch.soon">準備中</div></div>
+    </div>
+
+    <form id="f" onsubmit="return send(event)">
+      <div class="row2">
+        <div><label data-i="f.name">お名前</label><input name="name" required></div>
+        <div><label data-i="f.contact">ご連絡先（WeChat／LINE／Email）</label><input name="contact" required></div>
+      </div>
+      <div class="row2">
+        <div><label data-i="f.in">チェックイン</label><input type="date" name="cin" required></div>
+        <div><label data-i="f.out">チェックアウト</label><input type="date" name="cout" required></div>
+      </div>
+      <div class="row2">
+        <div><label data-i="f.prop">ご希望の施設</label>
+          <select name="prop"><option>M HOTEL 島之内</option><option>M HOTEL 島之内 9F</option><option data-i="f.any">指定なし</option></select></div>
+        <div><label data-i="f.guests">ご人数</label><input type="number" name="guests" min="1" max="8" value="2"></div>
+      </div>
+      <div><label data-i="f.msg">ご要望（任意）</label><textarea name="msg"></textarea></div>
+      <div><button class="btn dk" type="submit" data-i="f.send">この内容で問い合わせる</button></div>
+    </form>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="fgrid">
+      <div>
+        <div class="bd">M HOTEL</div>
+        <p data-i="ft.about">大阪・島之内を拠点とする滞在型ホテル。全室キッチン付き、長期滞在にも対応しています。</p>
+      </div>
+      <div>
+        <h4>PROPERTIES</h4>
+        <ul>
+          <li><a href="#properties">M HOTEL 島之内</a></li>
+          <li><a href="#properties">M HOTEL 島之内 9F</a></li>
+          <li><a href="#properties">M HOTEL 堂ヶ芝</a></li>
+          <li><a href="#properties">M HOTEL 高津</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>CONTACT</h4>
+        <ul>
+          <li>WhatsApp · <span data-i="ft.soon2">WeChat / LINE 準備中</span></li>
+          <li data-i="ft.mail">メールは準備中</li>
+          <li>+81 90-8527-5777</li>
+        </ul>
+      </div>
+    </div>
+    <div class="fbot">
+      <div>© 2026 M HOTEL</div>
+      <div data-i="ft.lic">大阪市 特区民泊 認定施設</div>
+    </div>
+  </div>
+</footer>
+
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"Hotel",
+  "name":"M HOTEL 島之内",
+  "alternateName":["M HOTEL","엠 호텔","M酒店"],
+  "url":"https://ouka-reform.jp/m-hotel/",
+  "image":"https://ouka-reform.jp/m-hotel/assets/hero.jpg",
+  "priceRange":"¥¥",
+  "address":{"@type":"PostalAddress","streetAddress":"島之内2-6-6","addressLocality":"大阪市中央区","addressRegion":"大阪府","addressCountry":"JP"},
+  "telephone":"+81-90-8527-5777",
+    "availableLanguage":["ja","en","zh-Hans","zh-Hant","ko"],
+  "amenityFeature":[
+    {"@type":"LocationFeatureSpecification","name":"キッチン","value":true},
+    {"@type":"LocationFeatureSpecification","name":"洗濯機","value":true},
+    {"@type":"LocationFeatureSpecification","name":"Wi-Fi","value":true},
+    {"@type":"LocationFeatureSpecification","name":"エアコン（DAIKIN）","value":true}
+  ],
+  "potentialAction":{
+    "@type":"ReserveAction",
+    "target":{"@type":"EntryPoint","urlTemplate":"https://ouka-reform.jp/m-hotel/#contact","actionPlatform":["http://schema.org/DesktopWebPlatform","http://schema.org/MobileWebPlatform"]},
+    "result":{"@type":"LodgingReservation","name":"公式サイト直接予約"}
+  },
+  "containsPlace":[
+    {"@type":"Hotel","name":"M HOTEL 島之内 9F","address":{"@type":"PostalAddress","streetAddress":"島之内2-6-6","addressLocality":"大阪市中央区","addressCountry":"JP"}}
+  ]
+}
+</script>
+
+<script>
+const T={
+ja:{"nav.stay":"客室","nav.prop":"施設","nav.direct":"公式予約","nav.members":"メンバーズ","nav.contact":"お問合せ",
+"hero.sub":"大阪・島之内。公式サイトからのご予約が、最もお得です。","hero.book":"公式サイトから予約","hero.see":"施設を見る",
+"direct.h":"公式サイトから予約する理由","direct.p":"予約サイトを通さずに、私たちと直接つながっていただけます。",
+"d1.h":"ベストレート","d1.p":"予約サイトの手数料がかからない分、公式サイトが最も有利な価格です。",
+"d2.h":"母国語で直接相談","d2.p":"WeChat・LINE・WhatsApp。ご予約前も滞在中も、使い慣れた方法で。",
+"d3.h":"柔軟な対応","d3.p":"アーリーチェックイン、レイトチェックアウト、連泊のご相談を直接承ります。",
+"d4.h":"次回も、その次も","d4.p":"一度お泊まりいただいた方には、次回以降のご予約を直接ご案内します。",
+"prop.h":"ひとつの名前で、増えていく滞在先。","prop.p":"大阪・島之内を拠点に、順次拡げてまいります。",
+"tag.open":"営業中","tag.soon":"準備中",
+"p1.p":"心斎橋・道頓堀へ徒歩圏。全室キッチン付きで、長期滞在にも。","p2.p":"最上階。広めの間取りと眺望。ご家族・グループのご滞在に。",
+"p3.p":"全室改装済み。オープンに向けて準備を進めています。","p4.p":"次の M HOTEL。詳細は決まり次第ご案内いたします。",
+"stay.h":"住むように、泊まる。","stay.p":"DAIKIN の空調、TOTO の水まわり、Panasonic の床。仕様は全室共通です。",
+"mem.h":"一度きりの旅を、続く関係に。","mem.p":"ご登録は無料です。次回以降、公式サイトから直接ご予約いただけます。","mem.cta":"メンバー登録について問い合わせる",
+"m1.h":"メンバー価格","m1.p":"公式サイト限定の会員料金をご用意します。","m2.h":"優先のご案内","m2.p":"新しい M HOTEL の情報を、先にお届けします。",
+"m3.h":"滞在の記録","m3.p":"前回のお部屋やご希望を覚えています。毎回お伝えいただく必要はありません。","m4.h":"直接のご連絡","m4.p":"お使いのアプリで、担当者に直接ご相談いただけます。",
+"ct.h":"ご予約・お問い合わせ","ct.p":"お使いのアプリからそのままご連絡いただけます。フォームでも承ります。",
+"ch.tap":"タップでID表示","ch.line":"友だち追加","ch.tel":"お電話","ch.soon":"準備中","ch.line.id":"LINE 公式アカウントは準備中です。WhatsApp またはお電話をご利用ください。","ch.wechat.id":"WeChat ID：（登録後にこちらへ表示します）",
+"f.name":"お名前","f.contact":"ご連絡先（WeChat／LINE／Email）","f.in":"チェックイン","f.out":"チェックアウト","f.prop":"ご希望の施設","f.any":"指定なし","f.guests":"ご人数","f.msg":"ご要望（任意）","f.send":"WhatsApp で問い合わせる",
+"f.subject":"【公式サイト】ご予約のお問い合わせ","ft.about":"大阪・島之内を拠点とする滞在型ホテル。全室キッチン付き、長期滞在にも対応しています。","ft.mail":"メールは準備中","ft.soon2":"WeChat / LINE 準備中","ft.lic":"大阪市 特区民泊 認定施設"},
+
+en:{"nav.stay":"Rooms","nav.prop":"Properties","nav.direct":"Book Direct","nav.members":"Members","nav.contact":"Contact",
+"hero.sub":"Osaka, Shimanouchi. The best rate is always here, on our official site.","hero.book":"Book Direct","hero.see":"View Properties",
+"direct.h":"Why book on the official site","direct.p":"No booking platform in between — you reach us directly.",
+"d1.h":"Best Rate","d1.p":"Without platform commission, the official site is always the better price.",
+"d2.h":"Talk to us directly","d2.p":"WeChat, LINE, WhatsApp. Before and during your stay, in the app you already use.",
+"d3.h":"Flexible","d3.p":"Early check-in, late check-out, extended stays — arranged directly with us.",
+"d4.h":"Next time, and the time after","d4.p":"Once you have stayed with us, you book directly from then on.",
+"prop.h":"One name. More places to stay.","prop.p":"Based in Shimanouchi, Osaka — and growing.",
+"tag.open":"Open","tag.soon":"Coming Soon",
+"p1.p":"Walking distance to Shinsaibashi and Dotonbori. Every room has a kitchen.","p2.p":"Top floor. Larger layouts and city views — for families and groups.",
+"p3.p":"Fully renovated. Preparing to open.","p4.p":"The next M HOTEL. Details to follow.",
+"stay.h":"Stay as if you live here.","stay.p":"DAIKIN air conditioning, TOTO bath and washlet, Panasonic flooring — the same in every room.",
+"mem.h":"From one stay to a lasting one.","mem.p":"Free to join. Book directly from the official site every time after.","mem.cta":"Ask about membership",
+"m1.h":"Member Rate","m1.p":"A member price available only on the official site.","m2.h":"First to know","m2.p":"News of each new M HOTEL reaches you first.",
+"m3.h":"We remember","m3.p":"Your room and your preferences. No need to explain again.","m4.h":"Direct line","m4.p":"Reach your contact in the app you already use.",
+"ct.h":"Reservations &amp; Enquiries","ct.p":"Message us in your own app, or use the form below.",
+"ch.tap":"Tap for ID","ch.line":"Add friend","ch.tel":"Call us","ch.soon":"Coming soon","ch.line.id":"Our LINE official account is coming soon. Please use WhatsApp or call us.","ch.wechat.id":"WeChat ID: (to be shown here once registered)",
+"f.name":"Name","f.contact":"Contact (WeChat / LINE / Email)","f.in":"Check-in","f.out":"Check-out","f.prop":"Property","f.any":"No preference","f.guests":"Guests","f.msg":"Requests (optional)","f.send":"Send via WhatsApp",
+"f.subject":"[Official Site] Reservation enquiry","ft.about":"A stay-style hotel based in Shimanouchi, Osaka. Every room has a kitchen; long stays welcome.","ft.mail":"Email coming soon","ft.soon2":"WeChat / LINE coming soon","ft.lic":"Osaka City Special Zone Minpaku — Certified"},
+
+zh:{"nav.stay":"客房","nav.prop":"物业","nav.direct":"官网预订","nav.members":"会员","nav.contact":"联系",
+"hero.sub":"大阪·岛之内。官网预订，永远是最优惠的。","hero.book":"官网直接预订","hero.see":"查看物业",
+"direct.h":"为什么在官网订","direct.p":"不经过平台，直接和我们联系。",
+"d1.h":"最优价格","d1.p":"省下平台手续费，官网的价格最划算。",
+"d2.h":"用您习惯的方式","d2.p":"微信・LINE・WhatsApp。订房前、入住中，都可以直接问。",
+"d3.h":"可以商量","d3.p":"提前入住、延迟退房、连住优惠，直接跟我们说。",
+"d4.h":"下次，以及下下次","d4.p":"住过一次之后，以后都可以直接找我们订。",
+"prop.h":"一个名字，不断增加的住处。","prop.p":"以大阪·岛之内为起点，陆续增加。",
+"tag.open":"营业中","tag.soon":"筹备中",
+"p1.p":"步行可达心斋桥·道顿堀。全房带厨房，适合长住。","p2.p":"顶层。户型更大，视野更好，适合家庭和团体。",
+"p3.p":"全部房间已翻新，正在准备开业。","p4.p":"下一间 M HOTEL。详情确定后另行通知。",
+"stay.h":"像住在家里一样。","stay.p":"大金空调、TOTO 卫浴、松下地板 —— 每间房都是同一标准。",
+"mem.h":"从住一次，到一直住。","mem.p":"注册免费。以后每次都可以在官网直接订。","mem.cta":"咨询会员注册",
+"m1.h":"会员价","m1.p":"只在官网提供的会员价格。","m2.h":"优先通知","m2.p":"新的 M HOTEL 开业，您最先知道。",
+"m3.h":"记得您的习惯","m3.p":"上次住的房型和您的要求，我们记着，不用每次重说。","m4.h":"直接联系","m4.p":"用您常用的软件，直接找到负责人。",
+"ct.h":"预订·咨询","ct.p":"用您常用的软件直接联系，也可以填下面的表格。",
+"ch.tap":"点击显示 ID","ch.line":"加好友","ch.tel":"电话","ch.soon":"筹备中","ch.line.id":"LINE 官方账号筹备中。请用 WhatsApp 或直接来电。","ch.wechat.id":"微信号：（开通后显示在此处）",
+"f.name":"姓名","f.contact":"联系方式（微信／LINE／邮箱）","f.in":"入住日","f.out":"退房日","f.prop":"希望的物业","f.any":"不指定","f.guests":"人数","f.msg":"其他要求（选填）","f.send":"用 WhatsApp 咨询",
+"f.subject":"【官网】预订咨询","ft.about":"位于大阪·岛之内的住宿型酒店。全房带厨房，可长期入住。","ft.mail":"邮箱筹备中","ft.soon2":"WeChat / LINE 筹备中","ft.lic":"大阪市 特区民宿 认定设施"},
+
+tw:{"nav.stay":"客房","nav.prop":"物業","nav.direct":"官網預訂","nav.members":"會員","nav.contact":"聯絡",
+"hero.sub":"大阪·島之內。官網預訂，永遠是最優惠的。","hero.book":"官網直接預訂","hero.see":"查看物業",
+"direct.h":"為什麼在官網訂","direct.p":"不經過平台，直接和我們聯絡。",
+"d1.h":"最優價格","d1.p":"省下平台手續費，官網的價格最划算。",
+"d2.h":"用您習慣的方式","d2.p":"微信・LINE・WhatsApp。訂房前、入住中，都可以直接問。",
+"d3.h":"可以商量","d3.p":"提前入住、延遲退房、連住優惠，直接跟我們說。",
+"d4.h":"下次，以及下下次","d4.p":"住過一次之後，以後都可以直接找我們訂。",
+"prop.h":"一個名字，不斷增加的住處。","prop.p":"以大阪·島之內為起點，陸續增加。",
+"tag.open":"營業中","tag.soon":"籌備中",
+"p1.p":"步行可達心齋橋·道頓堀。全房附廚房，適合長住。","p2.p":"頂樓。格局更大、視野更好，適合家庭與團體。",
+"p3.p":"全部房間已翻新，正在準備開業。","p4.p":"下一間 M HOTEL。詳情確定後另行通知。",
+"stay.h":"像住在家裡一樣。","stay.p":"大金空調、TOTO 衛浴、Panasonic 地板 —— 每間房都是同一標準。",
+"mem.h":"從住一次，到一直住。","mem.p":"註冊免費。以後每次都可以在官網直接訂。","mem.cta":"諮詢會員註冊",
+"m1.h":"會員價","m1.p":"只在官網提供的會員價格。","m2.h":"優先通知","m2.p":"新的 M HOTEL 開業，您最先知道。",
+"m3.h":"記得您的習慣","m3.p":"上次住的房型和您的要求，我們記著，不用每次重說。","m4.h":"直接聯絡","m4.p":"用您常用的軟體，直接找到負責人。",
+"ct.h":"預訂·諮詢","ct.p":"用您常用的軟體直接聯絡，也可以填下面的表格。",
+"ch.tap":"點擊顯示 ID","ch.line":"加好友","ch.tel":"電話","ch.soon":"籌備中","ch.line.id":"LINE 官方帳號籌備中。請用 WhatsApp 或直接來電。","ch.wechat.id":"微信號：（開通後顯示在此處）",
+"f.name":"姓名","f.contact":"聯絡方式（微信／LINE／信箱）","f.in":"入住日","f.out":"退房日","f.prop":"希望的物業","f.any":"不指定","f.guests":"人數","f.msg":"其他需求（選填）","f.send":"用 WhatsApp 諮詢",
+"f.subject":"【官網】預訂諮詢","ft.about":"位於大阪·島之內的住宿型飯店。全房附廚房，可長期入住。","ft.mail":"信箱籌備中","ft.soon2":"WeChat / LINE 籌備中","ft.lic":"大阪市 特區民宿 認定設施"},
+
+ko:{"nav.stay":"객실","nav.prop":"시설","nav.direct":"공식 예약","nav.members":"멤버스","nav.contact":"문의",
+"hero.sub":"오사카 시마노우치. 공식 사이트 예약이 가장 저렴합니다.","hero.book":"공식 사이트에서 예약","hero.see":"시설 보기",
+"direct.h":"공식 사이트에서 예약하는 이유","direct.p":"예약 사이트를 거치지 않고 저희와 직접 연결됩니다.",
+"d1.h":"최저가","d1.p":"플랫폼 수수료가 없는 만큼 공식 사이트가 가장 유리합니다.",
+"d2.h":"편한 방법으로 직접 상담","d2.p":"WeChat・LINE・WhatsApp. 예약 전에도 숙박 중에도.",
+"d3.h":"유연한 대응","d3.p":"얼리 체크인, 레이트 체크아웃, 연박 상담을 직접 받습니다.",
+"d4.h":"다음에도, 그 다음에도","d4.p":"한 번 묵으신 분께는 이후 예약을 직접 안내드립니다.",
+"prop.h":"하나의 이름, 늘어나는 숙소.","prop.p":"오사카 시마노우치를 거점으로 순차적으로 넓혀갑니다.",
+"tag.open":"영업 중","tag.soon":"준비 중",
+"p1.p":"신사이바시·도톤보리 도보권. 전 객실 주방 완비, 장기 체류에도.","p2.p":"최상층. 넓은 구조와 전망. 가족·단체에 적합합니다.",
+"p3.p":"전 객실 리모델링 완료. 오픈 준비 중입니다.","p4.p":"다음 M HOTEL. 상세는 확정되는 대로 안내드립니다.",
+"stay.h":"사는 것처럼 머무르다.","stay.p":"DAIKIN 에어컨, TOTO 욕실, Panasonic 바닥 — 전 객실 동일 사양입니다.",
+"mem.h":"한 번의 여행을, 계속되는 관계로.","mem.p":"등록은 무료입니다. 다음부터는 공식 사이트에서 직접 예약하실 수 있습니다.","mem.cta":"멤버십 문의하기",
+"m1.h":"멤버 요금","m1.p":"공식 사이트 한정 회원 요금을 마련합니다.","m2.h":"우선 안내","m2.p":"새로운 M HOTEL 소식을 먼저 전해드립니다.",
+"m3.h":"기억합니다","m3.p":"지난번 객실과 요청 사항을 기억합니다. 매번 말씀하지 않으셔도 됩니다.","m4.h":"직접 연락","m4.p":"사용하시는 앱으로 담당자와 바로 상담하실 수 있습니다.",
+"ct.h":"예약·문의","ct.p":"사용하시는 앱으로 바로 연락 주세요. 아래 양식도 가능합니다.",
+"ch.tap":"탭하여 ID 표시","ch.line":"친구 추가","ch.tel":"전화","ch.soon":"준비 중","ch.line.id":"LINE 공식 계정은 준비 중입니다. WhatsApp 또는 전화를 이용해 주세요.","ch.wechat.id":"WeChat ID: (개설 후 여기에 표시됩니다)",
+"f.name":"성함","f.contact":"연락처 (WeChat / LINE / Email)","f.in":"체크인","f.out":"체크아웃","f.prop":"희망 시설","f.any":"지정 없음","f.guests":"인원","f.msg":"요청 사항 (선택)","f.send":"WhatsApp으로 문의",
+"f.subject":"[공식 사이트] 예약 문의","ft.about":"오사카 시마노우치에 위치한 체류형 호텔. 전 객실 주방 완비, 장기 체류 가능합니다.","ft.mail":"이메일 준비 중","ft.soon2":"WeChat / LINE 준비 중","ft.lic":"오사카시 특구민박 인정 시설"}
+};
+
+let L="ja";
+const LANGMAP={ja:"ja",en:"en",zh:"zh-Hans",tw:"zh-Hant",ko:"ko"};
+
+function apply(l){
+  L=l; const d=T[l];
+  document.querySelectorAll("[data-i]").forEach(e=>{
+    const v=d[e.getAttribute("data-i")];
+    if(v!==undefined) e.innerHTML=v;
+  });
+  document.documentElement.lang=LANGMAP[l];
+  document.querySelectorAll("#lang button").forEach(b=>b.classList.toggle("on",b.dataset.l===l));
+  try{localStorage.setItem("mh_lang",l)}catch(e){}
+}
+document.querySelectorAll("#lang button").forEach(b=>b.onclick=()=>apply(b.dataset.l));
+
+// 初回言語：保存値 → ブラウザ設定 → ja
+(function(){
+  let l=null;
+  try{l=localStorage.getItem("mh_lang")}catch(e){}
+  if(!l){
+    const n=(navigator.language||"ja").toLowerCase();
+    if(n.startsWith("zh")) l=(n.includes("tw")||n.includes("hk")||n.includes("hant"))?"tw":"zh";
+    else if(n.startsWith("ko")) l="ko";
+    else if(n.startsWith("ja")) l="ja";
+    else l="en";
+  }
+  apply(l);
+})();
+
+// ギャラリー
+const g=document.getElementById("gal");
+[2,4,5,6,7,8,10,11,12,13,15,16,18,19,20,21].forEach(n=>{
+  const s=String(n).padStart(2,"0");
+  g.insertAdjacentHTML("beforeend",
+    `<a href="assets/rooms/room-${s}.jpg" target="_blank" rel="noopener"><img src="assets/rooms/room-${s}.jpg" alt="M HOTEL 客室 ${s}" loading="lazy"></a>`);
+});
+
+// nav
+addEventListener("scroll",()=>document.getElementById("nav").classList.toggle("solid",scrollY>60));
+
+// 問い合わせ → メール下書き（バックエンド不要）
+function send(e){
+  e.preventDefault();
+  const f=e.target, v=n=>f[n].value.trim();
+  const d=T[L];
+  const body=[
+    d["f.subject"],
+    `${d["f.name"]}: ${v("name")}`,
+    `${d["f.contact"]}: ${v("contact")}`,
+    `${d["f.in"]}: ${v("cin")}  ${d["f.out"]}: ${v("cout")}`,
+    `${d["f.prop"]}: ${v("prop")}`,
+    `${d["f.guests"]}: ${v("guests")}`,
+    `${d["f.msg"]}: ${v("msg")||"-"}`
+  ].join("\n");
+  window.open("https://wa.me/819085275777?text="+encodeURIComponent(body),"_blank","noopener");
+  return false;
+}
+</script>
+</body>
+</html>

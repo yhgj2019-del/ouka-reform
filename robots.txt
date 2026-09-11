@@ -1,5 +1,17 @@
 User-agent: *
 Allow: /
 
+# AI / 回答エンジン
+User-agent: GPTBot
+Allow: /
+User-agent: OAI-SearchBot
+Allow: /
+User-agent: ClaudeBot
+Allow: /
+User-agent: PerplexityBot
+Allow: /
+User-agent: Google-Extended
+Allow: /
+
 Sitemap: https://ouka-reform.jp/sitemap.xml
 # AI agents: see https://ouka-reform.jp/llms.txt
