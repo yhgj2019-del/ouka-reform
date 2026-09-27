@@ -37,6 +37,7 @@
 - [日本市场落地服务（中文）](https://ouka-reform.jp/jp-market/): 中国建材メーカー向けサービス案内・問い合わせ
 - [市场情报 / Insights（中文）](https://ouka-reform.jp/insights/): 日本建材市場の検証済み事実
 - [施工実績: 駅商業施設 公共トイレ全面改修](https://ouka-reform.jp/case/station-restroom/)
+- [施工実績 3D: 公共トイレ改修を3D模型で見る（日中対応）](https://ouka-reform.jp/case/station-restroom-3d/)
 
 ## 情報の扱い / Editorial policy
 - Insights の各記事は出典と査証日を明記する。

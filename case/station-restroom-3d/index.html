@@ -1,0 +1,1130 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>駅商業施設 公共トイレ改修｜中国材 × TOTO を3D模型で見る｜桜華国際</title>
+<meta name="description" content="大阪府内・駅商業施設の公共トイレ改修（男子・女子・多目的・廊下）。見える面は中国調達の仕上げ材、手が触れる器具は TOTO。3D模型を回して部位をタップすると、素材・調達先・理由と現場写真が見られます。">
+<meta name="robots" content="index,follow">
+<meta name="theme-color" content="#14233b">
+<meta property="og:type" content="article">
+<meta property="og:title" content="見える面は中国材、触る所は TOTO｜公共トイレ改修 3D施工実績｜桜華国際">
+<meta property="og:description" content="大阪府内・駅商業施設の公共トイレ改修を、触れる3D模型で。部位をタップすると素材・調達先・現場写真。">
+<meta property="og:image" content="https://ouka-reform.jp/case/station-restroom-3d/assets/og.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://ouka-reform.jp/case/station-restroom-3d/assets/og.jpg">
+<link rel="canonical" href="https://ouka-reform.jp/case/station-restroom-3d/">
+<link rel="icon" type="image/jpeg" href="../../logo.jpg">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/three@0.183.2/build/three.module.js" crossorigin>
+<style>
+:root{
+  --ink:#14233b;--ink2:#1d3251;--paper:#f3f0ea;--mute:#5c6675;--line:#e2ddd3;
+  --gold:#b5714a;--gold2:#e6b98f;--cn:#c8643b;--jp:#2e5c9a;--nt:#a7a39b;
+  --glass:rgba(255,255,255,.82);--sh:0 18px 50px -24px rgba(20,35,59,.45);
+  --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  font-family:"Hiragino Sans","Hiragino Kaku Gothic ProN","Noto Sans JP","Noto Sans CJK JP","PingFang SC","Microsoft YaHei",system-ui,sans-serif;
+  color:var(--ink);-webkit-font-smoothing:antialiased;
+}
+html[lang="zh-CN"]{font-family:"PingFang SC","Hiragino Sans GB","Noto Sans SC","Noto Sans CJK SC","Microsoft YaHei",system-ui,sans-serif}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;overflow:hidden;background:var(--paper)}
+button{font:inherit;color:inherit;cursor:pointer;-webkit-tap-highlight-color:transparent}
+a{color:inherit;-webkit-tap-highlight-color:transparent}
+button:focus-visible,a:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+#world{position:fixed;inset:0;z-index:0;background:radial-gradient(ellipse at 55% 45%,#fbfaf7 0%,#efebe3 60%,#e4dfd5 100%)}
+#world canvas{display:block;width:100%;height:100%;touch-action:none;cursor:grab;outline:none}
+#world canvas.hover{cursor:pointer}
+#world canvas:active{cursor:grabbing}
+.vignette{position:fixed;inset:0;z-index:1;pointer-events:none;background:linear-gradient(90deg,rgba(243,240,234,.92) 0,rgba(243,240,234,.55) 22%,rgba(243,240,234,0) 34%)}
+#loading{position:fixed;top:48%;width:100%;text-align:center;color:var(--mute);font-size:14px;letter-spacing:.08em;z-index:1}
+#loading.err{color:#a33}
+.ui{position:fixed;z-index:5}
+.card{background:var(--glass);backdrop-filter:blur(14px) saturate(1.2);-webkit-backdrop-filter:blur(14px) saturate(1.2);border:1px solid rgba(20,35,59,.09);border-radius:16px;box-shadow:var(--sh)}
+
+/* ---- left aside ---- */
+.side{left:22px;top:18px;width:350px;pointer-events:none}
+.side>*{pointer-events:auto}
+.brandline{display:flex;align-items:center;gap:8px;font-size:12px;letter-spacing:.14em;color:var(--gold);font-weight:700}
+.brandline a{text-decoration:none}
+.brandline i{display:inline-block;width:18px;height:2px;background:var(--gold)}
+.side h1{margin:10px 0 8px;font-size:30px;line-height:1.25;font-weight:800;letter-spacing:.01em}
+.side h1 em{font-style:normal;color:var(--cn)}
+.side h1 b{color:var(--jp)}
+.side .sub{margin:0;font-size:13px;line-height:1.75;color:#3a4657;max-width:30em}
+.loc{display:inline-flex;gap:6px;flex-wrap:wrap;margin-top:10px}
+.loc span{font-size:11.5px;border:1px solid rgba(20,35,59,.18);border-radius:999px;padding:3px 10px;background:rgba(255,255,255,.6);color:#3a4657}
+.stats{display:flex;gap:6px;margin-top:12px}
+.stat{flex:1;padding:7px 10px 7px;border-radius:11px;background:rgba(255,255,255,.78);border:1px solid rgba(20,35,59,.09);min-width:0;text-align:left}
+button.stat{cursor:pointer}
+.stat i{display:block;font:600 9.5px/1 var(--mono);letter-spacing:.14em;color:#8a8577;font-style:normal;text-transform:uppercase}
+.stat b{display:block;margin-top:5px;font-size:14px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.stat.hot b{color:var(--gold)}
+#readout{display:none;margin-top:8px;padding:8px 11px;border-radius:11px;background:#fff;border:1px solid rgba(20,35,59,.09);font-size:13px;font-weight:700}
+#readout.on{display:block}
+#readout .cn{color:var(--cn)}#readout .jp{color:var(--jp)}
+#readout small{display:block;font-weight:400;color:var(--mute);font-size:11px;margin-top:3px}
+.why{margin:10px 0 0;font-size:13px;line-height:1.75;color:#2b3648;background:rgba(255,255,255,.55);border-left:3px solid var(--gold2);padding:8px 11px;border-radius:0 10px 10px 0;min-height:3.2em}
+
+/* ---- control card ---- */
+.ctl{right:22px;top:18px;padding:10px 11px;display:flex;flex-direction:column;gap:9px;width:390px}
+.row{display:flex;gap:10px;align-items:flex-end;flex-wrap:wrap}
+.grp{display:flex;flex-direction:column;gap:4px;min-width:0}
+.grp.f1{flex:1}
+.lab{display:flex;justify-content:space-between;gap:8px;font-size:10px;letter-spacing:.12em;color:#7b7668;font-weight:700;margin:0 3px}
+.lab em{font:500 9.5px var(--mono);font-style:normal;color:#a39d8e;letter-spacing:0}
+.seg{display:flex;gap:2px;padding:2px;border-radius:11px;background:rgba(20,35,59,.06)}
+.seg button{flex:1;border:0;background:transparent;border-radius:9px;height:32px;padding:0 10px;font-size:13px;font-weight:600;color:#495466;white-space:nowrap}
+.seg button.on{background:#fff;color:var(--ink);box-shadow:0 1px 4px rgba(20,35,59,.16)}
+.seg.origin button.on[data-v="o"]{background:linear-gradient(90deg,var(--cn) 0 50%,var(--jp) 50% 100%);color:#fff}
+.tools{display:flex;gap:6px}
+.ib{height:36px;min-width:36px;padding:0 11px;border-radius:10px;border:1px solid rgba(20,35,59,.12);background:#fff;font-size:13px;font-weight:600;display:inline-flex;align-items:center;gap:6px;white-space:nowrap}
+.ib svg{width:17px;height:17px;fill:currentColor}
+.ib.dark{background:var(--ink);color:#fff;border-color:var(--ink)}
+.ib.lang b{font-weight:800}
+.ib.lang span{opacity:.45}
+.mcta{display:none;background:var(--gold2);border-color:var(--gold2);color:var(--ink);text-decoration:none;font-weight:700}
+
+/* part menu */
+#menu{display:none;flex-direction:column;gap:4px;max-height:46vh;overflow:auto;padding-top:2px}
+#menu.on{display:flex}
+#menu .mh{font-size:10px;letter-spacing:.14em;color:#8a8577;font-weight:700;margin:6px 3px 2px}
+#menu button{display:flex;align-items:center;gap:8px;border:0;background:rgba(255,255,255,.7);border-radius:9px;padding:7px 10px;text-align:left;font-size:13px}
+#menu button:hover,#menu button.on{background:#fff;box-shadow:0 1px 4px rgba(20,35,59,.14)}
+.dot{width:9px;height:9px;border-radius:50%;flex:none;background:var(--nt)}
+.dot.cn{background:var(--cn)}.dot.jp{background:var(--jp)}
+
+/* ---- part card ---- */
+#pcard{right:22px;top:196px;bottom:74px;width:390px;display:flex;flex-direction:column;overflow:hidden;transform:translateX(120%);transition:transform .35s cubic-bezier(.2,.8,.2,1);background:rgba(255,255,255,.94)}
+#pcard.on{transform:none}
+#pcard .ph{padding:14px 16px 10px;border-bottom:1px solid var(--line);display:flex;gap:10px;align-items:flex-start}
+#pcard .ph h2{margin:0;font-size:17px;line-height:1.4;flex:1}
+.x{border:0;background:rgba(20,35,59,.06);width:32px;height:32px;border-radius:50%;font-size:18px;line-height:1;flex:none}
+.badge{display:inline-flex;align-items:center;gap:6px;font-size:11.5px;font-weight:700;padding:3px 10px;border-radius:999px;margin-bottom:6px;color:#fff;background:var(--nt)}
+.badge.cn{background:var(--cn)}.badge.jp{background:var(--jp)}
+#pcard .pb{overflow:auto;padding:12px 16px 16px;-webkit-overflow-scrolling:touch}
+.kv{margin:0 0 10px}
+.kv dt{font-size:10.5px;letter-spacing:.14em;color:var(--gold);font-weight:700;margin-bottom:2px}
+.kv dd{margin:0;font-size:13.5px;line-height:1.75;color:#2b3648}
+.note{font-size:11.5px;color:var(--mute);line-height:1.6;background:#f6f4ef;border-radius:8px;padding:7px 9px;margin:8px 0 0}
+.phs{margin:0 0 12px}
+.phs .seg button{height:30px;font-size:12.5px}
+.phs .seg button .n{font:500 10px var(--mono);opacity:.55;margin-left:3px}
+.viewer{position:relative;margin-top:8px;border-radius:10px;overflow:hidden;background:#1b2230;aspect-ratio:4/3}
+.viewer img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;cursor:zoom-in;transition:opacity .25s}
+.viewer .empty{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;text-align:center;color:#aab4c4;font-size:13px;padding:20px;line-height:1.7}
+.viewer .nav{position:absolute;top:50%;transform:translateY(-50%);border:0;width:34px;height:34px;border-radius:50%;background:rgba(0,0,0,.35);color:#fff;font-size:18px}
+.viewer .nav.l{left:6px}.viewer .nav.r{right:6px}
+.viewer .tag{position:absolute;left:8px;top:8px;font-size:11px;font-weight:700;color:#fff;background:rgba(20,35,59,.7);padding:2px 8px;border-radius:6px}
+.cap{font-size:12.5px;color:#3a4657;margin:6px 2px 0;line-height:1.6;min-height:1.6em}
+.thumbs{display:flex;gap:6px;margin-top:8px;overflow-x:auto;padding-bottom:2px}
+.thumbs button{border:2px solid transparent;padding:0;border-radius:7px;overflow:hidden;flex:none;width:58px;height:58px;background:#ddd}
+.thumbs button.on{border-color:var(--gold)}
+.thumbs img{width:100%;height:100%;object-fit:cover;display:block}
+.pcta{display:block;margin-top:14px;text-align:center;font-size:13px;font-weight:700;padding:10px;border-radius:10px;background:var(--ink);color:#fff;text-decoration:none}
+
+/* ---- bottom ---- */
+.legend{left:22px;bottom:18px;display:flex;gap:12px;flex-wrap:wrap;align-items:center;font-size:12px;padding:8px 12px;opacity:0;transform:translateY(8px);transition:.3s;pointer-events:none}
+.legend.on{opacity:1;transform:none}
+.legend span{display:inline-flex;gap:6px;align-items:center}
+.foot{left:22px;bottom:18px;max-width:560px;font-size:11px;color:#6d7482;line-height:1.55;transition:opacity .3s}
+.foot.hide{opacity:0}
+.hint{left:50%;bottom:18px;transform:translateX(-50%);font-size:11.5px;color:#6d7482;background:rgba(255,255,255,.7);padding:5px 12px;border-radius:999px;white-space:nowrap;transition:opacity .6s}
+.cta{right:22px;bottom:18px;display:flex;gap:8px;align-items:center}
+.cta a{display:inline-flex;align-items:center;gap:8px;background:var(--ink);color:#fff;text-decoration:none;font-size:13px;font-weight:700;padding:11px 16px;border-radius:11px;box-shadow:var(--sh)}
+.cta a i{font-style:normal;color:var(--gold2)}
+
+/* exploded labels */
+#labels{position:fixed;inset:0;pointer-events:none;z-index:3}
+.lbl{position:absolute;transform:translate(-100%,-50%);white-space:nowrap;font-size:12px;font-weight:700;background:rgba(255,255,255,.92);border:1px solid rgba(20,35,59,.12);border-radius:8px;padding:4px 9px;box-shadow:0 4px 14px -6px rgba(20,35,59,.4);opacity:0;transition:opacity .25s;display:flex;align-items:center;gap:6px}
+.lbl::after{content:"";position:absolute;right:-18px;top:50%;width:18px;height:1px;background:rgba(20,35,59,.35)}
+.lbl small{font-weight:400;color:var(--mute)}
+
+/* dialog */
+dialog{border:0;border-radius:18px;padding:0;max-width:640px;width:calc(100% - 28px);max-height:calc(100% - 40px);box-shadow:0 30px 80px -20px rgba(0,0,0,.5);color:var(--ink)}
+dialog::backdrop{background:rgba(20,35,59,.45);backdrop-filter:blur(3px)}
+.dlg{padding:26px 28px 24px;overflow:auto;max-height:calc(100vh - 40px)}
+.dlg h2{margin:0 0 4px;font-size:22px}
+.dlg .lead{margin:0 0 16px;color:var(--mute);font-size:13.5px;line-height:1.7}
+.dlg h3{margin:18px 0 4px;font-size:15.5px;display:flex;gap:8px;align-items:center}
+.dlg h3 .n{font:700 12px var(--mono);color:var(--gold)}
+.dlg p{margin:0;font-size:13.5px;line-height:1.85;color:#2b3648}
+.dlg .fine{font-size:11.5px;color:var(--mute);margin-top:18px;line-height:1.7;border-top:1px dashed var(--line);padding-top:12px}
+.dlg .keys{font-size:11.5px;color:var(--mute);margin-top:8px;line-height:1.9}
+.dlg .keys kbd{font:600 10.5px var(--mono);border:1px solid var(--line);border-bottom-width:2px;border-radius:4px;padding:0 5px;background:#faf9f6;color:var(--ink)}
+.contact{margin-top:18px;background:linear-gradient(150deg,#14233b,#24406a);color:#fff;border-radius:14px;padding:18px 18px 16px;text-align:center}
+.contact h4{margin:0 0 6px;font-size:16px}
+.contact p{color:#cdd6e4;font-size:12.5px}
+.contact .rows{display:flex;justify-content:center;gap:18px;flex-wrap:wrap;margin:10px 0 4px;font-size:13px}
+.contact .rows a{text-decoration:none;color:#fff}
+.contact .rows small{display:block;color:#8ea1bd;font-size:10.5px;letter-spacing:.12em}
+.contact .btn{display:inline-block;margin-top:10px;padding:10px 20px;border-radius:9px;background:var(--gold2);color:var(--ink);font-weight:700;text-decoration:none;font-size:13.5px}
+.dlg .x{position:sticky;top:0;float:right}
+
+/* lightbox */
+#lb{position:fixed;inset:0;z-index:20;background:rgba(10,14,22,.92);display:none;align-items:center;justify-content:center;flex-direction:column;padding:16px}
+#lb.on{display:flex}
+#lb img{max-width:100%;max-height:calc(100% - 60px);object-fit:contain;border-radius:6px}
+#lb p{color:#dfe5ee;font-size:13px;margin:10px 0 0;text-align:center}
+#lb .x{position:absolute;right:14px;top:14px;background:rgba(255,255,255,.15);color:#fff}
+#toast{position:fixed;left:50%;bottom:80px;transform:translateX(-50%);background:var(--ink);color:#fff;font-size:13px;padding:8px 14px;border-radius:9px;opacity:0;transition:.3s;z-index:30;pointer-events:none}
+#toast.on{opacity:1}
+
+/* ---- tablet ---- */
+@media (max-width:1100px){
+  .side{width:300px}.side h1{font-size:25px}
+  .ctl,#pcard{width:350px}
+  .foot{max-width:380px}
+  .hint{display:none}
+}
+/* ---- mobile ---- */
+@media (max-width:760px){
+  .vignette{background:linear-gradient(180deg,rgba(243,240,234,.94) 0,rgba(243,240,234,.6) 22%,rgba(243,240,234,0) 32%)}
+  .side{left:12px;right:12px;top:calc(8px + env(safe-area-inset-top));width:auto}
+  .brandline{font-size:10.5px}
+  .side h1{font-size:19px;margin:5px 0 4px;line-height:1.3}
+  .side h1 br{display:none}
+  .side .sub{display:none}
+  .loc{margin-top:4px}.loc span{font-size:10.5px;padding:2px 8px}
+  .stats{margin-top:7px;gap:5px}
+  .stat{padding:5px 8px}.stat b{font-size:12.5px;margin-top:3px}.stat i{font-size:8.5px}
+  #readout{font-size:12px;padding:6px 9px;margin-top:6px}
+  .why{font-size:12px;line-height:1.6;padding:6px 9px;margin-top:6px;min-height:0;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+  .ctl{left:10px;right:10px;top:auto;bottom:calc(10px + env(safe-area-inset-bottom));width:auto;padding:8px;gap:7px}
+  .ctl .row{flex-wrap:nowrap;gap:6px}
+  .ctl .lab{display:none}
+  .seg button{height:34px;padding:0 6px;font-size:12.5px}
+  .tools{gap:5px}
+  .ib{height:36px;padding:0 9px;font-size:12px}
+  .ib .t{display:none}
+  #menu{max-height:40vh}
+  #pcard{left:0;right:0;bottom:0;top:auto;width:auto;height:min(60vh,560px);border-radius:18px 18px 0 0;transform:translateY(105%);padding-bottom:env(safe-area-inset-bottom)}
+  #pcard.on{transform:none}
+  #pcard .ph{padding:12px 14px 8px}
+  #pcard .ph::before{content:"";position:absolute;left:50%;top:5px;width:38px;height:4px;border-radius:2px;background:rgba(20,35,59,.18);transform:translateX(-50%)}
+  #pcard .pb{padding:10px 14px 18px}
+  .viewer{aspect-ratio:4/3}
+  .legend{left:10px;right:10px;bottom:170px;font-size:11px;padding:6px 10px;gap:9px}
+  .foot,.hint{display:none}
+  .cta{display:none}
+  .mcta{display:inline-flex}
+  .dlg{padding:20px 18px 18px}
+  .dlg h2{font-size:19px}
+}
+@media (prefers-reduced-motion:reduce){#pcard,.legend{transition:none}}
+</style>
+<script type="importmap">
+{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.183.2/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.183.2/examples/jsm/"}}
+</script>
+</head>
+<body>
+<main id="world" aria-label="改修後の公共トイレを模型にした3D表示。部位をタップすると説明と写真が開きます"></main>
+<div id="loading" data-i="loading">図面から模型を組み立て中…</div>
+<div class="vignette" aria-hidden="true"></div>
+<div id="labels" aria-hidden="true"></div>
+
+<aside class="ui side">
+  <div class="brandline"><i></i><a href="https://ouka-reform.jp/" target="_blank" rel="noopener">OUKA 桜華国際</a><span data-i="eyebrow">施工実績 · 3D CASE</span></div>
+  <h1 data-i-html="h1">見える面は<em>中国材</em>、<br>触る所は<b>TOTO</b>。</h1>
+  <p class="sub" data-i="sub"></p>
+  <div class="loc"><span data-i="loc1">大阪府内・駅商業施設</span><span data-i="loc2">1F 男子・女子・多目的・廊下</span></div>
+  <div class="stats">
+    <button class="stat hot" id="st-phase" aria-label="工程を切り替え"><i data-i="stPhase">工程</i><b id="s-phase">完成</b></button>
+    <button class="stat" id="st-view" aria-label="表示を切り替え"><i data-i="stView">表示</i><b id="s-view">仕上げ</b></button>
+    <button class="stat" id="st-part" aria-label="部位一覧"><i data-i="stPart">選択</i><b id="s-part">—</b></button>
+  </div>
+  <div id="readout" aria-live="polite"></div>
+  <p class="why" id="why" aria-live="polite"></p>
+</aside>
+
+<section class="ui card ctl" aria-label="操作">
+  <div class="row">
+    <div class="grp f1"><span class="lab"><span data-i="lPhase">工程・写真</span><em>1 2 3</em></span>
+      <div class="seg" id="seg-phase" role="group"><button data-v="b" data-i="pb">施工前</button><button data-v="d" data-i="pd">施工中</button><button data-v="a" class="on" data-i="pa">完成</button></div></div>
+  </div>
+  <div class="row">
+    <div class="grp f1"><span class="lab"><span data-i="lView">色分け</span><em>O</em></span>
+      <div class="seg origin" id="seg-origin" role="group"><button data-v="f" class="on" data-i="vf">仕上げ</button><button data-v="o" data-i="vo">調達別</button></div></div>
+    <div class="grp f1"><span class="lab"><span data-i="lEx">模型</span><em>X</em></span>
+      <div class="seg" id="seg-ex" role="group"><button data-v="0" class="on" data-i="e0">組立</button><button data-v="1" data-i="e1">分解</button></div></div>
+  </div>
+  <div class="row" style="justify-content:space-between">
+    <div class="tools">
+      <button class="ib" id="b-menu" aria-expanded="false"><svg viewBox="0 0 24 24"><path d="M4 6h16v2H4zm0 5h16v2H4zm0 5h16v2H4z"/></svg><span class="t" data-i="bMenu">部位一覧</span></button>
+      <button class="ib dark" id="b-how"><svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm1 15h-2v-2h2zm2.1-7.7-.9.9A3 3 0 0 0 13 13h-2v-.5a4 4 0 0 1 1.2-2.8l1.2-1.3A2 2 0 1 0 10 7H8a4 4 0 1 1 7.1 2.3z"/></svg><span class="t" data-i="bHow">この改修の考え方</span></button>
+    </div>
+    <div class="tools">
+      <button class="ib" id="b-share" aria-label="リンクを共有"><svg viewBox="0 0 24 24"><path d="M18 16a3 3 0 0 0-2.1.9l-7-4.1a3 3 0 0 0 0-1.6l7-4.1A3 3 0 1 0 15 5a3 3 0 0 0 .1.8l-7 4.1a3 3 0 1 0 0 4.2l7 4.1a3 3 0 1 0 2.9-2.2z"/></svg></button>
+      <a class="ib mcta" href="https://ouka-reform.jp/" target="_blank" rel="noopener" data-i="mcta">相談する</a>
+      <button class="ib lang" id="b-lang" aria-label="言語 / 语言"><b id="lg-a">日本語</b><span>/</span><span id="lg-b">中文</span></button>
+    </div>
+  </div>
+  <div id="menu" role="menu"></div>
+</section>
+
+<section class="ui card" id="pcard" aria-live="polite" aria-hidden="true">
+  <div class="ph"><div style="flex:1"><span class="badge" id="pc-badge"></span><h2 id="pc-title"></h2></div><button class="x" id="pc-close" aria-label="閉じる">×</button></div>
+  <div class="pb">
+    <div class="phs">
+      <div class="seg" id="seg-pphase" role="group"><button data-v="b"><span data-i="pb">施工前</span><span class="n"></span></button><button data-v="d"><span data-i="pd">施工中</span><span class="n"></span></button><button data-v="a"><span data-i="pa">完成</span><span class="n"></span></button></div>
+      <div class="viewer" id="viewer"></div>
+      <p class="cap" id="pc-cap"></p>
+      <div class="thumbs" id="thumbs"></div>
+    </div>
+    <dl class="kv"><dt data-i="kMat">素材・仕様</dt><dd id="pc-mat"></dd></dl>
+    <dl class="kv"><dt data-i="kWhy">この調達にした理由</dt><dd id="pc-why"></dd></dl>
+    <p class="note" id="pc-note" hidden></p>
+    <a class="pcta" href="https://ouka-reform.jp/" target="_blank" rel="noopener" data-i="pcta">同じような改修を相談する → ouka-reform.jp</a>
+  </div>
+</section>
+
+<div class="ui card legend" id="legend"><span><i class="dot cn"></i><b data-i="lgCn">中国調達（仕上げ材）</b></span><span><i class="dot jp"></i><b data-i="lgJp">日本製 TOTO（器具）</b></span><span><i class="dot"></i><span data-i="lgNt">区分なし・既存・下地</span></span></div>
+<p class="ui foot" id="foot" data-i="foot"></p>
+<div class="ui hint" id="hint" data-i="hint">ドラッグで回転 · ホイール／ピンチで拡大 · 部位をクリック</div>
+<div class="ui cta"><a href="https://ouka-reform.jp/" target="_blank" rel="noopener"><span data-i="cta">改修のご相談</span><i>→ ouka-reform.jp</i></a></div>
+
+<dialog id="how">
+  <div class="dlg">
+    <button class="x" id="how-close" aria-label="閉じる">×</button>
+    <h2 data-i="hT">この改修の考え方</h2>
+    <p class="lead" data-i="hLead"></p>
+    <h3><span class="n">01</span><span data-i="h1t"></span></h3><p data-i="h1p"></p>
+    <h3><span class="n">02</span><span data-i="h2t"></span></h3><p data-i="h2p"></p>
+    <h3><span class="n">03</span><span data-i="h3t"></span></h3><p data-i="h3p"></p>
+    <h3><span class="n">04</span><span data-i="h4t"></span></h3><p data-i="h4p"></p>
+    <h3><span class="n">05</span><span data-i="h5t"></span></h3><p data-i="h5p"></p>
+    <div class="contact">
+      <h4 data-i="cT"></h4>
+      <p data-i="cP"></p>
+      <div class="rows">
+        <a href="tel:09085275777"><small>TEL</small>090-8527-5777</a>
+        <a href="mailto:info@ouka-reform.jp"><small>EMAIL</small>info@ouka-reform.jp</a>
+        <span id="wechat"><small>WeChat</small>ouka-reform</span>
+      </div>
+      <a class="btn" href="https://ouka-reform.jp/" target="_blank" rel="noopener" data-i="cBtn">ouka-reform.jp を見る</a>
+    </div>
+    <p class="fine" data-i="fine"></p>
+    <p class="keys" data-i-html="keys"></p>
+  </div>
+</dialog>
+
+<div id="lb" role="dialog" aria-modal="true"><button class="x" id="lb-close" aria-label="閉じる">×</button><img alt=""><p></p></div>
+<div id="toast"></div>
+
+<script type="module">
+import * as THREE from 'three';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+
+/* =========================================================
+   TEXT (ja primary / zh)
+   ========================================================= */
+const T = {
+ ja:{
+  loading:'図面から模型を組み立て中…', eyebrow:'施工実績 · 3D CASE',
+  h1:'見える面は<em>中国材</em>、<br>触る所は<b>TOTO</b>。',
+  sub:'駅商業施設の公共トイレ改修を、模型にして開きました。回して、部位をタップ。素材・調達先・その理由と、施工前／中／後の現場写真が出ます。',
+  loc1:'大阪府内・駅商業施設', loc2:'1F 男子・女子・多目的・廊下',
+  stPhase:'工程', stView:'表示', stPart:'選択',
+  lPhase:'工程・写真', lView:'色分け', lEx:'模型',
+  pb:'施工前', pd:'施工中', pa:'完成', vf:'仕上げ', vo:'調達別', e0:'組立', e1:'分解', vEx:'分解図',
+  bMenu:'部位一覧', bHow:'この改修の考え方',
+  kMat:'素材・仕様', kWhy:'この調達にした理由',
+  pcta:'同じような改修を相談する → ouka-reform.jp',
+  lgCn:'中国調達（仕上げ材）', lgJp:'日本製 TOTO（器具）', lgNt:'区分なし・既存・下地',
+  foot:'※ 3D模型は平面図（S=1/50）をもとにした概略イメージです。寸法・器具の形・色は実物と異なります。施設名・発注者・金額・工期は非公開。',
+  hint:'ドラッグで回転 · ホイール／ピンチで拡大 · 部位をクリック',
+  cta:'改修のご相談', mcta:'相談する',
+  oCN:'中国調達', oJP:'日本製（TOTO）', oNT:'区分なし',
+  readout:'<span class="cn">仕上げ材 中国調達</span> / <span class="jp">器具 TOTO</span>',
+  readoutSm:(c,j,n)=>`この模型の区分：中国調達 ${c}品目・TOTO ${j}品目・区分なし ${n}品目`,
+  menuCN:'中国調達 · 見える面', menuJP:'日本製 TOTO · 触る所', menuNT:'その他',
+  noPhoto:'この工程の写真はありません', photoOf:(i,n)=>`${i} / ${n}`,
+  why:{
+   a:'完成：木目と石目のパネル、大判タイル、LEDミラー。どこでもタップすると、素材・調達先・現場写真が開きます。',
+   b:'施工前：タイル張りの壁と小口タイルの床。※ 3Dは当時の雰囲気を示すイメージで、旧レイアウトの再現ではありません。',
+   d:'施工中：既存を解体し、軽量鉄骨の下地（グレーの格子）と給排水（青・灰の管）を組み直した段階。廊下は青いシートで養生。',
+   o:(c,j)=>`オレンジ＝中国調達の仕上げ材（${c}品目）、ブルー＝TOTO の器具（${j}品目）。面積が大きく見た目を決めるものは中国、毎日手が触れて保守が要る“接点”は日本製。`,
+   x:'分解図：仕上げを躯体から持ち上げています。下から 床 → 器具・カウンター → 間仕切り → 壁パネル。残ったグレーが下地と配管（自社施工）。',
+   sel:(n,o)=>`選択中：${n}（${o}）。`,
+   ph:(p)=>`写真は「${p}」を表示中。`,
+   autoA:'（調達別・分解は完成状態で表示します）'
+  },
+  toast:'リンクをコピーしました', share:'公共トイレ改修 3D施工実績｜桜華国際',
+  hT:'この改修の考え方',
+  hLead:'「安いから中国、良いから日本」ではなく、部位ごとに役割を分けて選びました。',
+  h1t:'見える面は中国材', h1p:'壁のアルミハニカムパネル（木目調・石目調）、1200×600 の大判タイル、廊下の 455角 石目調フロアタイル、オーダー製作の洗面カウンター、LEDミラー、トイレブース、小便器スクリーン、サイン。面積が大きく空間の印象を決める部材や、図面どおりに別注する部材は、価格と納期に強い中国のサプライチェーンから調達しました。',
+  h2t:'触る所は日本製', h2p:'便器・小便器、自動水栓、ソープディスペンサー、電気温水器は TOTO。毎日手が触れ、故障すれば保証と部品が必要になる“接点”だからです。見た目は日本の商業施設グレード、コストは中国のサプライチェーン、という組み合わせです。',
+  h3t:'公共トイレで大事なこと（耐久・清掃性・バリアフリー）', h3p:'日本の公共トイレ改修で問われるのは見た目だけではなく、耐久性、掃除のしやすさ、バリアフリー。床は目地の少ない大判タイル、多目的トイレには手すり・手洗器・ベビーチェア、小便器にも手すりを設けています。',
+  h4t:'工期を守る段取り', h4p:'営業中の施設での工事のため、区画を分けて施工し、通路は養生して利用者の動線を確保しました。中国調達の部材は、価格だけでなく納期の面でも選んでいます。',
+  h5t:'私たちが担当した範囲', h5p:'解体・墨出し・軽量鉄骨下地、給排水・電気、内装仕上げ（パネル・タイル・防水・間仕切り）、器具・手すり・サインの取付と清掃引き渡しまで、工程と職人を自社で手配しました。',
+  cT:'商業施設・公共トイレの改修、ご相談ください', cP:'中国材と日本製器具の使い分けから、営業中の施設での段取りまで。', cBtn:'ouka-reform.jp を見る',
+  fine:'※ 3D模型は平面図（S=1/50）をもとにした概略イメージです。寸法・器具の形状・色・ブースの向き等は実物と異なります。天井高さ約2,485mm・製品高さ2,480mm は図面メモによる値です。施工前・施工中の3D表示は雰囲気を示すもので、旧レイアウトの再現ではありません。写真は当社撮影の現場記録（位置情報は削除済み）。施設名・発注者・金額・工期は非公開です。',
+  keys:'<kbd>ドラッグ</kbd> 回転　<kbd>右ドラッグ</kbd> 移動　<kbd>ホイール</kbd> 拡大　<kbd>1</kbd><kbd>2</kbd><kbd>3</kbd> 施工前／中／完成　<kbd>O</kbd> 調達別　<kbd>X</kbd> 分解　<kbd>L</kbd> 言語　<kbd>R</kbd> 視点リセット　<kbd>Esc</kbd> 閉じる',
+  exL:{wall:['壁パネル','アルミハニカム（木目・石目）'],part:['間仕切り・スクリーン','ブース／レインボーガラス'],fix:['器具・カウンター・鏡','TOTO器具＋オーダーカウンター'],floor:['床仕上げ','1200×600 大判タイル／455角'],base:['下地・設備','軽量鉄骨下地・給排水（自社施工）']}
+ },
+ zh:{
+  loading:'正在根据图纸搭建模型…', eyebrow:'施工实绩 · 3D 案例',
+  h1:'看得见的面用<em>中国材</em>，<br>手碰的地方用<b>TOTO</b>。',
+  sub:'把车站商业设施的公共卫生间改修做成了可以拆开看的模型。转动模型，点击任意部位，查看材料、采购来源、理由，以及施工前／中／后的现场照片。',
+  loc1:'大阪府内・车站商业设施', loc2:'1F 男卫・女卫・多功能・走廊',
+  stPhase:'工序', stView:'显示', stPart:'选中',
+  lPhase:'工序・照片', lView:'着色', lEx:'模型',
+  pb:'施工前', pd:'施工中', pa:'完工', vf:'实景', vo:'按来源', e0:'组装', e1:'分解', vEx:'分解图',
+  bMenu:'部位列表', bHow:'这次改修的思路',
+  kMat:'材料・规格', kWhy:'为什么这样采购',
+  pcta:'咨询同类改修 → ouka-reform.jp',
+  lgCn:'中国采购（饰面材料）', lgJp:'日本产 TOTO（洁具）', lgNt:'未分类・原有・基层',
+  foot:'※ 3D 模型根据平面图（1:50）示意制作，尺寸、器具造型与颜色和实物不同。设施名称、发包方、金额与工期不公开。',
+  hint:'拖动旋转 · 滚轮／双指缩放 · 点击部位',
+  cta:'咨询改修', mcta:'咨询',
+  oCN:'中国采购', oJP:'日本产（TOTO）', oNT:'未分类',
+  readout:'<span class="cn">饰面材料 中国采购</span> / <span class="jp">洁具 TOTO</span>',
+  readoutSm:(c,j,n)=>`本模型分类：中国采购 ${c} 项・TOTO ${j} 项・未分类 ${n} 项`,
+  menuCN:'中国采购 · 看得见的面', menuJP:'日本产 TOTO · 手碰的地方', menuNT:'其他',
+  noPhoto:'这个工序没有照片', photoOf:(i,n)=>`${i} / ${n}`,
+  why:{
+   a:'完工：木纹与石纹墙板、大板砖、LED 镜。点击任意部位，查看材料、采购来源和现场照片。',
+   b:'施工前：瓷砖墙面、小块地砖。※ 3D 只是示意当时的感觉，并非还原原有布局。',
+   d:'施工中：拆除原有装修后，重新做轻钢龙骨（灰色格栅）和给排水（蓝・灰色管）。走廊用蓝色保护膜养生。',
+   o:(c,j)=>`橙色＝中国采购的饰面材料（${c} 项），蓝色＝TOTO 洁具（${j} 项）。面积大、决定观感的用中国的；每天手碰、需要售后的“接触点”用日本的。`,
+   x:'分解图：把饰面层从结构上抬起来。自下而上：地面 → 洁具・台面 → 隔断 → 墙板。留在下面的灰色是基层和管道（我们自己施工）。',
+   sel:(n,o)=>`选中：${n}（${o}）。`,
+   ph:(p)=>`照片显示「${p}」。`,
+   autoA:'（按来源着色和分解图以完工状态显示）'
+  },
+  toast:'链接已复制', share:'公共卫生间改修 3D 施工实绩｜桜華国際',
+  hT:'这次改修的思路',
+  hLead:'不是“便宜就用中国的、好就用日本的”，而是按部位分工来选。',
+  h1t:'看得见的面用中国材', h1p:'墙面铝蜂窝板（木纹・石纹）、1200×600 大板砖、走廊 455×455 仿大理石纹塑胶地板、订制台面、LED 镜、厕所隔断、小便斗隔板、标识。面积大、决定空间观感的材料，以及按图订制的部件，从价格和交期都有优势的中国供应链采购。',
+  h2t:'手碰的地方用日本产', h2p:'马桶・小便斗、感应龙头、给皂器、电热水器用 TOTO。每天手碰，坏了需要保修和配件，这些“接触点”用日本产，用着放心、坏了有人管。看起来是日本商业级，成本来自中国供应链。',
+  h3t:'公共卫生间最重要的（耐用・好清洁・无障碍）', h3p:'日本公共卫生间改修，难点不只在好看，还在耐用、好清洁、符合无障碍要求。地面用接缝少的大板砖；多功能卫生间配扶手、洗手盆和育婴椅，小便斗也带扶手。',
+  h4t:'守住工期的安排', h4p:'设施在营业中施工，所以分区施工，走廊做好养生，保证顾客动线。中国采购的部件，不只看价格，也看交期。',
+  h5t:'我们负责的范围', h5p:'拆除、放线、轻钢龙骨基层，给排水・电气，内装饰面（墙板・瓷砖・防水・隔断），洁具・扶手・标识安装到清扫交付，工序和职人都由我们自己安排。',
+  cT:'商业设施・公共卫生间改修，欢迎咨询', cP:'从中日产品怎么搭配，到营业中设施的施工安排，中文直接沟通。', cBtn:'访问 ouka-reform.jp',
+  fine:'※ 3D 模型根据平面图（1:50）示意制作，尺寸、器具造型、颜色、隔间朝向等与实物不同。天花高度约 2,485mm、产品高度 2,480mm 来自图纸备注。施工前・施工中的 3D 只示意感觉，并非还原原有布局。照片为本公司现场记录（已删除位置信息）。设施名称、发包方、金额与工期不公开。',
+  keys:'<kbd>拖动</kbd> 旋转　<kbd>右键拖动</kbd> 平移　<kbd>滚轮</kbd> 缩放　<kbd>1</kbd><kbd>2</kbd><kbd>3</kbd> 施工前／中／完工　<kbd>O</kbd> 按来源　<kbd>X</kbd> 分解　<kbd>L</kbd> 语言　<kbd>R</kbd> 重置视角　<kbd>Esc</kbd> 关闭',
+  exL:{wall:['墙板','铝蜂窝板（木纹・石纹）'],part:['隔断・隔板','厕所隔断／彩虹玻璃'],fix:['洁具・台面・镜子','TOTO 洁具＋订制台面'],floor:['地面饰面','1200×600 大板砖／455 地板'],base:['基层・设备','轻钢龙骨・给排水（自己施工）']}
+ }
+};
+
+/* photos: id -> captions */
+const PH = {
+ cor_b:{ja:'施工前：既存の廊下とサイン',zh:'施工前：原有走廊和标识'},
+ cor_d:{ja:'施工中：新しいサインを取付、床は養生中',zh:'施工中：新标识已安装，地面养生中'},
+ cor_a:{ja:'完成：入口サインと廊下',zh:'完工：入口标识和走廊'},
+ uri_b:{ja:'施工前：既存の小便器',zh:'施工前：原有小便斗'},
+ uri_d:{ja:'施工中：小便器3台分の下地と排水',zh:'施工中：3 个小便斗的基层和排水'},
+ uri_a:{ja:'完成：小便器とガラススクリーン、石目調パネル',zh:'完工：小便斗、玻璃隔板、石纹墙板'},
+ uri_a2:{ja:'完成：男子トイレ全景',zh:'完工：男卫全景'},
+ van_b:{ja:'施工前：既存の洗面器',zh:'施工前：原有洗手盆'},
+ van_d:{ja:'施工中：カウンター内の自動水栓ユニット取付',zh:'施工中：台面下安装感应龙头组件'},
+ van_a:{ja:'完成：3連ボウルの洗面カウンターと LEDミラー',zh:'完工：三连盆台面和 LED 镜'},
+ van_a2:{ja:'完成：洗面カウンター（木目調の扉）',zh:'完工：洗手台（木纹柜门）'},
+ van_a3:{ja:'完成：女子パウダーコーナーと横長の LEDミラー',zh:'完工：女卫化妆区和长条 LED 镜'},
+ fau_b:{ja:'施工前：既存の水栓・洗面器',zh:'施工前：原有龙头和洗手盆'},
+ toi_b:{ja:'施工前：既存の便器（ブース内）',zh:'施工前：原有马桶（隔间内）'},
+ toi_d:{ja:'施工中：搬入した TOTO 製品',zh:'施工中：进场的 TOTO 产品'},
+ boo_d:{ja:'施工中：解体後のブースまわり',zh:'施工中：拆除后的隔间区域'},
+ boo_a:{ja:'完成：個室ブース',zh:'完工：隔间'},
+ boo_a2:{ja:'完成：個室ブース（便器・手洗器）',zh:'完工：隔间（马桶・洗手器）'},
+ mp_b:{ja:'施工前：既存の多目的トイレ',zh:'施工前：原有多功能卫生间'},
+ mp_d:{ja:'施工中：解体後の多目的トイレ',zh:'施工中：拆除后的多功能卫生间'},
+ mp_a:{ja:'完成：多目的トイレ（手すり・手洗器）',zh:'完工：多功能卫生间（扶手・洗手盆）'},
+ mp_a2:{ja:'完成：ベビーチェアのある多目的スペース',zh:'完工：带育婴椅的多功能区'},
+ flo_b:{ja:'施工前：小口タイルの床',zh:'施工前：小块地砖'},
+ flo_d:{ja:'施工中：大判タイル張り（レベル調整クリップ使用）',zh:'施工中：铺大板砖（用找平卡子）'},
+ flo_a:{ja:'完成：大判タイルの床',zh:'完工：大板砖地面'},
+ wal_d:{ja:'施工中：解体後、下地を組み直し',zh:'施工中：拆除后重做基层'},
+ wal_s:{ja:'採用した木目調パネルのサンプル',zh:'所用木纹板样品'},
+ wal_a:{ja:'完成：木目調パネルの壁',zh:'完工：木纹墙板'}
+};
+
+/* parts */
+const PARTS = {
+ wall:{o:'cn',layer:'wall',view:'home',
+  ja:{n:'壁パネル',t:'壁仕上げ：アルミハニカムパネル（木目調・石目調）',m:'アルミハニカムパネル。洗面・ブース・多目的は木目調、小便器まわりは石目調。',w:'面積が最も大きく、空間の印象を決める“見える面”。軽く・平滑で湿気に強く、大面積の商業空間に向く。中国のサプライチェーンは価格・納期ともに強い。',note:'石目調パネルの範囲は写真をもとにした概略です。'},
+  zh:{n:'墙板',t:'墙面：铝蜂窝板（木纹・石纹）',m:'铝蜂窝板。洗手区・隔间・多功能间用木纹，小便斗一侧用石纹。',w:'面积最大、决定空间观感的“可见面”。轻、平整、防潮，适合商业空间大面积上墙；中国供应链价格和交期都有优势。',note:'石纹板的使用范围根据照片示意。'},
+  ph:{b:['mp_b'],d:['wal_d'],a:['wal_a','uri_a','wal_s']}},
+ floor:{o:'cn',layer:'floor',view:'home',
+  ja:{n:'床タイル',t:'床：1200×600 大判タイル（石目調）',m:'1200×600 の大判タイル。トイレ内の床全面。',w:'大判は目地が少なく見た目に高級感が出る。中国は世界のタイル生産拠点で、同規格を調達しやすい。'},
+  zh:{n:'地砖',t:'地面：600×1200 大板砖（石纹）',m:'600×1200 大板砖，卫生间内地面全铺。',w:'大板砖接缝少、显档次。中国是全球瓷砖产能中心，同规格更容易采购。'},
+  ph:{b:['flo_b'],d:['flo_d'],a:['flo_a']}},
+ corfloor:{o:'cn',layer:'floor',view:'f',focus:[120,560,0,-30,50,6.5],
+  ja:{n:'廊下床',t:'廊下：455角 石目調フロアタイル',m:'455×455 の石目調フロアタイル（樹脂系）。',w:'耐摩耗性があり、メンテナンスしやすく、施工もしやすい。人通りの多い廊下向き。'},
+  zh:{n:'走廊地面',t:'走廊：455×455 仿大理石纹塑胶地板',m:'455×455 仿大理石纹塑胶地板。',w:'耐磨、好维护、好铺，适合人流多的走廊。'},
+  ph:{b:['cor_b'],d:['cor_d'],a:['cor_a']}},
+ vanity:{o:'cn',layer:'fix',view:'f',focus:[345,498,0.95,172,40,5],
+  ja:{n:'洗面カウンター',t:'洗面カウンター：オーダー製作の人造大理石調カウンター',m:'大理石調のカウンター（3連ボウル）を図面に合わせて別注。下部は木目調の扉。男子・女子に各1台。',w:'中国の工場は図面どおりの別注に対応でき、日本で単品を別注するより有利。見た目を決める“見える部材”。',note:'製造元・ブランドは確認中のため記載していません。'},
+  zh:{n:'洗手台',t:'洗手台：订制仿大理石台面',m:'按图订制的仿大理石台面（三连盆），下方木纹柜门。男卫、女卫各一台。',w:'中国工厂能按图订制，比在日本单独订制更有优势；是决定观感的“可见部件”。',note:'制造商・品牌尚在确认，暂不标注。'},
+  ph:{b:['van_b'],d:['van_d'],a:['van_a','van_a2']}},
+ mirror:{o:'cn',layer:'fix',view:'f',focus:[345,510,1.45,178,24,4.8],
+  ja:{n:'LEDミラー',t:'LEDミラー',m:'照明を内蔵した化粧鏡。洗面は縦長3面、女子パウダーは横長。',w:'手で操作・保守する器具ではなく、空間の印象を決める“見える部材”のため中国調達。'},
+  zh:{n:'LED 镜',t:'LED 镜',m:'内置灯带的镜子。洗手区为竖向三面，女卫化妆区为横向长镜。',w:'不是天天手动操作、需要售后的器具，而是决定空间观感的“可见部件”，所以用中国采购。'},
+  ph:{b:[],d:[],a:['van_a','van_a3']}},
+ partition:{o:'cn',layer:'part',view:'f',focus:[554,245,1.1,-90,55,5.2],
+  ja:{n:'トイレブース',t:'トイレブース（間仕切り・扉）',m:'木目調の間仕切りと扉。天井付近までの高さ（図面メモ：製品高さ 2,480mm）。',w:'面積が大きく見た目に効く仕上げ部材のため中国調達。'},
+  zh:{n:'厕所隔断',t:'厕所隔断（隔板・门）',m:'木纹隔板和门，高度接近天花（图纸备注：产品高度 2,480mm）。',w:'面积大、影响观感的饰面部件，所以用中国采购。'},
+  ph:{b:['toi_b'],d:['boo_d'],a:['boo_a','boo_a2']}},
+ screen:{o:'cn',layer:'part',view:'f',focus:[335,160,1.1,110,52,4.6],
+  ja:{n:'小便器スクリーン',t:'小便器スクリーン（レインボーガラス）',m:'黒フレームのガラススクリーン（レインボーガラス）。',w:'プライバシーを確保する間仕切りで、空間のアクセントになる“見える部材”のため中国調達。'},
+  zh:{n:'小便斗隔板',t:'小便斗隔板（彩虹玻璃）',m:'黑框玻璃隔板（彩虹玻璃）。',w:'保护隐私的隔板，同时是空间亮点的“可见部件”，所以用中国采购。'},
+  ph:{b:['uri_b'],d:['uri_d'],a:['uri_a','uri_a2']}},
+ signage:{o:'cn',layer:'wall',view:'f',focus:[205,650,1.2,-45,24,6.5],
+  ja:{n:'サイン',t:'サイン（デザイン・製作）',m:'入口のサイン、誘導サイン、ピクトグラム。',w:'デザインから製作まで中国で。コストと柔軟性で有利。'},
+  zh:{n:'标识',t:'标识（设计＋制作）',m:'入口标识、导向标识、图标。',w:'从设计到制作都在中国完成，成本和灵活度都有优势。'},
+  ph:{b:['cor_b'],d:['cor_d'],a:['cor_a']}},
+ toilet:{o:'jp',layer:'fix',view:'f',focus:[554,290,0.45,-90,62,4.2],
+  ja:{n:'便器',t:'便器（TOTO）',m:'TOTO の腰掛便器。男子・女子のブースと多目的トイレ。',w:'毎日使い、故障すれば保証と部品が必要になる“接点”。国内のメーカー保証とサービスがある日本製に。'},
+  zh:{n:'马桶',t:'马桶（TOTO）',m:'TOTO 坐便器，用于男卫・女卫隔间和多功能卫生间。',w:'每天使用，坏了需要保修和配件的“接触点”，用有日本国内售后的日本产。'},
+  ph:{b:['toi_b'],d:['toi_d'],a:['boo_a','boo_a2']}},
+ urinal:{o:'jp',layer:'fix',view:'f',focus:[335,160,0.8,110,55,4.6],
+  ja:{n:'小便器',t:'小便器（TOTO）',m:'TOTO の壁掛小便器 3台（うち1台に手すり）。',w:'毎日使い、センサーや部品の保守が必要な“接点”のため日本製。'},
+  zh:{n:'小便斗',t:'小便斗（TOTO）',m:'TOTO 挂墙式小便斗 3 个（其中 1 个带扶手）。',w:'每天使用、感应器和配件需要维护的“接触点”，所以用日本产。'},
+  ph:{b:['uri_b'],d:['uri_d'],a:['uri_a','uri_a2']}},
+ faucet:{o:'jp',layer:'fix',view:'f',focus:[350,515,0.9,176,42,2.8],
+  ja:{n:'自動水栓・ソープ',t:'自動水栓・ソープディスペンサー（TOTO）',m:'TOTO の自動水栓と自動ソープディスペンサー（各ボウル）。',w:'毎日手が触れ、センサー等の保守・部品交換が要る。日本製なら保証と部品供給が安心。'},
+  zh:{n:'感应龙头・给皂器',t:'感应龙头・给皂器（TOTO）',m:'TOTO 感应龙头和自动给皂器（每个台盆）。',w:'每天手碰，感应器等需要维护和换件；日本产保修和配件供应更放心。'},
+  ph:{b:['fau_b'],d:['van_d'],a:['van_a']}},
+ heater:{o:'jp',layer:'fix',view:'f',focus:[300,500,0.45,168,36,3.4],
+  ja:{n:'電気温水器',t:'小型電気温水器（TOTO）',m:'洗面の給湯用の小型電気温水器。',w:'故障すればお湯が出なくなる設備機器。保証・部品のある日本製に。',note:'模型上の位置（カウンター下）はイメージです。温水器本体の写真はないため、洗面の完成写真を掲載しています。'},
+  zh:{n:'电热水器',t:'小型电热水器（TOTO）',m:'洗手供热水用的小型电热水器。',w:'坏了就没有热水的设备，用有保修和配件的日本产。',note:'模型中的位置（台面下）为示意。没有热水器本体的照片，这里放洗手区完工照片作参考。'},
+  ph:{b:[],d:[],a:['van_a2']}},
+ mp:{o:'jp',layer:'fix',view:'f',focus:[170,150,0.8,0,55,5.2],
+  ja:{n:'多目的トイレ器具',t:'多目的トイレ：便器・手洗器・手すり（TOTO）',m:'TOTO の便器・手洗器・手すり。ベビーチェアも設置。',w:'体重をかける手すりや、毎日使う器具は、保証と部品が確保できる日本製で。バリアフリーの要の部分。',note:'ベビーチェアのメーカーは資料に記載がないため区分していません。'},
+  zh:{n:'多功能卫生间洁具',t:'多功能卫生间：马桶・洗手盆・扶手（TOTO）',m:'TOTO 马桶・洗手盆・扶手，另设育婴椅。',w:'要承重的扶手和每天使用的洁具，用能保证保修和配件的日本产，是无障碍的关键。',note:'育婴椅品牌资料未注明，不做分类。'},
+  ph:{b:['mp_b'],d:['mp_d'],a:['mp_a','mp_a2']}},
+ powder:{o:'nt',layer:'fix',view:'f',focus:[661,730,0.9,180,40,5.2],
+  ja:{n:'パウダーカウンター',t:'女子パウダーコーナーのカウンター',m:'横長の LEDミラー（中国調達）と間接照明付きのカウンター。',w:'カウンター本体の調達先は資料に記載がないため、ここでは区分していません。'},
+  zh:{n:'化妆台',t:'女卫化妆区台面',m:'配横向 LED 长镜（中国采购）和间接照明的台面。',w:'台面本身的采购来源资料未注明，这里不做分类。'},
+  ph:{b:[],d:[],a:['van_a3']}},
+ base:{o:'nt',layer:'base',view:'home',
+  ja:{n:'下地・設備',t:'下地・設備（自社施工）',m:'解体、墨出し、軽量鉄骨下地、給排水配管、電気配線。',w:'見えなくなる部分ですが、パネルやタイルの仕上がりと、器具の保守性を決める部分。工程と職人を自社で手配しました。'},
+  zh:{n:'基层・设备',t:'基层・设备（自己施工）',m:'拆除、放线、轻钢龙骨基层、给排水管、电气布线。',w:'完工后看不见，却决定墙板和瓷砖的完成度以及洁具的可维护性。工序和职人由我们自己安排。'},
+  ph:{b:[],d:['wal_d','uri_d'],a:[]}}
+};
+const ORDER = ['wall','floor','corfloor','vanity','mirror','partition','screen','signage','toilet','urinal','faucet','heater','mp','powder','base'];
+
+/* =========================================================
+   STATE
+   ========================================================= */
+const qs = new URLSearchParams(location.search);
+const S = {
+  lang: (qs.get('lang')==='zh'||(!qs.get('lang')&&localStorage.getItem('ouka-lang')==='zh'))?'zh':'ja',
+  phase: ['b','d','a'].includes(qs.get('phase'))?qs.get('phase'):'a',
+  origin: qs.get('view')==='origin',
+  ex: qs.get('view')==='ex',
+  sel: PARTS[qs.get('part')]?qs.get('part'):null,
+  pphase: null, pidx: 0, menu:false, auto:false
+};
+if(S.origin||S.ex) S.phase='a';
+const $ = s=>document.querySelector(s);
+const L = ()=>T[S.lang];
+const P = id=>PARTS[id][S.lang];
+const phaseName = p=>L()[{b:'pb',d:'pd',a:'pa'}[p]];
+const originName = o=>L()[{cn:'oCN',jp:'oJP',nt:'oNT'}[o]];
+const counts = ()=>{const c={cn:0,jp:0,nt:0};ORDER.forEach(k=>c[PARTS[k].o]++);return c;};
+
+/* =========================================================
+   THREE SETUP
+   ========================================================= */
+const world = $('#world');
+let renderer;
+try{
+  renderer = new THREE.WebGLRenderer({antialias:true,alpha:true,powerPreference:'high-performance'});
+}catch(e){ $('#loading').textContent='WebGL を利用できません / 无法使用 WebGL'; $('#loading').classList.add('err'); throw e; }
+const isMobile = matchMedia('(max-width:760px)').matches || /Mobi|Android|iPhone/.test(navigator.userAgent);
+renderer.setPixelRatio(Math.min(devicePixelRatio, isMobile?1.75:2));
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = THREE.PCFShadowMap;
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure = 1.05;
+world.appendChild(renderer.domElement);
+
+const scene = new THREE.Scene();
+const pmrem = new THREE.PMREMGenerator(renderer);
+scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
+scene.environmentIntensity = 0.55;
+
+const camera = new THREE.PerspectiveCamera(isMobile?42:34, 1, 0.1, 200);
+const controls = new OrbitControls(camera, renderer.domElement);
+controls.enableDamping = true; controls.dampingFactor = 0.08;
+controls.minDistance = 2.2; controls.maxDistance = 40;
+controls.maxPolarAngle = Math.PI*0.47;
+controls.screenSpacePanning = true;
+
+scene.add(new THREE.HemisphereLight(0xfffaf0, 0xcfc6b8, 0.9));
+const sun = new THREE.DirectionalLight(0xfff4e6, 2.1);
+sun.position.set(-6, 12, 7); sun.castShadow = true;
+sun.shadow.mapSize.set(isMobile?1024:2048, isMobile?1024:2048);
+Object.assign(sun.shadow.camera,{left:-8,right:8,top:8,bottom:-8,near:1,far:40});
+sun.shadow.bias = -0.0004; sun.shadow.normalBias = 0.02;
+scene.add(sun);
+
+/* ---------- procedural textures ---------- */
+function cnv(n=512){const c=document.createElement('canvas');c.width=c.height=n;return [c,c.getContext('2d')];}
+function tex(c,rep=true){const t=new THREE.CanvasTexture(c);t.colorSpace=THREE.SRGBColorSpace;if(rep){t.wrapS=t.wrapT=THREE.RepeatWrapping;}t.anisotropy=4;return t;}
+function rnd(seed){let s=seed;return()=>{s=(s*16807)%2147483647;return (s-1)/2147483646;};}
+function oakTex(base='#d8b98e',dark='rgba(120,80,40,',seed=3){
+  const [c,g]=cnv(512);const r=rnd(seed);g.fillStyle=base;g.fillRect(0,0,512,512);
+  for(let i=0;i<260;i++){const x=r()*512,w=0.5+r()*2.2,a=0.04+r()*0.12;g.strokeStyle=dark+a+')';g.lineWidth=w;g.beginPath();
+    const amp=2+r()*6,f=0.006+r()*0.01,ph=r()*6;for(let y=0;y<=512;y+=8){const xx=x+Math.sin(y*f+ph)*amp;y?g.lineTo(xx,y):g.moveTo(xx,y);}g.stroke();}
+  g.fillStyle='rgba(255,255,255,.05)';for(let i=0;i<40;i++){g.fillRect(r()*512,0,1+r()*3,512);}
+  return tex(c);
+}
+function marbleTex(base=[244,243,240],vein=[150,150,155],seed=7,tiles=0,grout='rgba(90,90,95,.55)',vk=10){
+  const [c,g]=cnv(512);const r=rnd(seed);const img=g.createImageData(512,512);const d=img.data;
+  const N=32,grid=new Float32Array(N*N);for(let i=0;i<N*N;i++)grid[i]=r();
+  const sm=t=>t*t*(3-2*t);
+  const vn=(x,y)=>{const xi=Math.floor(x),yi=Math.floor(y),xf=sm(x-xi),yf=sm(y-yi);const a=(u,v)=>grid[((v%N+N)%N)*N+((u%N+N)%N)];
+    return (a(xi,yi)*(1-xf)+a(xi+1,yi)*xf)*(1-yf)+(a(xi,yi+1)*(1-xf)+a(xi+1,yi+1)*xf)*yf;};
+  const fbm=(x,y)=>{let v=0,amp=.5,f=1;for(let o=0;o<5;o++){v+=vn(x*f,y*f)*amp;amp*=.5;f*=2;}return v;};
+  const ang=r()*3.14, ca=Math.cos(ang), sa=Math.sin(ang);
+  for(let y=0;y<512;y++)for(let x=0;x<512;x++){
+    const u=x/512*N/4, v=y/512*N/4; // tileable: N/4 cells per texture with wrap at N
+    const tb=fbm(u*1.0,v*1.0);
+    const s1=Math.abs(Math.sin((x*ca+y*sa)*0.012+tb*9));
+    const s2=Math.abs(Math.sin((x*sa-y*ca)*0.02+tb*14+1.7));
+    const t=Math.min(1,Math.pow(1-s1,vk)*0.9+Math.pow(1-s2,vk*2)*0.5);
+    const cl=(fbm(u*3+5,v*3+5)-.5)*14; const i=(y*512+x)*4;
+    for(let k=0;k<3;k++)d[i+k]=base[k]*(1-t)+vein[k]*t+cl;d[i+3]=255;}
+  g.putImageData(img,0,0);
+  if(tiles){g.strokeStyle=grout;g.lineWidth=2;const cw=512/tiles[0],ch=512/tiles[1];
+    for(let i=0;i<=tiles[0];i++){g.beginPath();g.moveTo(i*cw,0);g.lineTo(i*cw,512);g.stroke();}
+    for(let j=0;j<=tiles[1];j++){g.beginPath();g.moveTo(0,j*ch);g.lineTo(512,j*ch);g.stroke();}}
+  return tex(c);
+}
+function gridTex(bg,line,n,lw=2,noise=0){
+  const [c,g]=cnv(256);g.fillStyle=bg;g.fillRect(0,0,256,256);const r=rnd(11);
+  if(noise){for(let i=0;i<1400;i++){g.fillStyle=`rgba(0,0,0,${r()*noise})`;g.fillRect(r()*256,r()*256,2,2);}}
+  g.strokeStyle=line;g.lineWidth=lw;const s=256/n;for(let i=0;i<=n;i++){g.beginPath();g.moveTo(i*s,0);g.lineTo(i*s,256);g.stroke();g.beginPath();g.moveTo(0,i*s);g.lineTo(256,i*s);g.stroke();}
+  return tex(c);
+}
+function noiseTex(bg,amt,seed=5){const [c,g]=cnv(256);g.fillStyle=bg;g.fillRect(0,0,256,256);const r=rnd(seed);
+  for(let i=0;i<5000;i++){const v=r();g.fillStyle=v>.5?`rgba(255,255,255,${r()*amt})`:`rgba(0,0,0,${r()*amt})`;g.fillRect(r()*256,r()*256,1+r()*3,1+r()*3);}return tex(c);}
+function hatchTex(){const [c,g]=cnv(128);g.fillStyle='#e9e5dd';g.fillRect(0,0,128,128);g.strokeStyle='rgba(20,35,59,.18)';g.lineWidth=2;
+  for(let i=-128;i<256;i+=14){g.beginPath();g.moveTo(i,0);g.lineTo(i+128,128);g.stroke();}return tex(c);}
+function signTex(){ // pink pillar face
+  const c=document.createElement('canvas');c.width=128;c.height=512;const g=c.getContext('2d');
+  g.fillStyle='#d4246b';g.fillRect(0,0,128,512);g.fillStyle='#fff';g.fillRect(88,0,6,512);g.fillRect(104,0,4,512);
+  g.strokeStyle='#fff';g.lineWidth=5;g.beginPath();g.moveTo(20,90);g.lineTo(62,90);g.moveTo(50,78);g.lineTo(62,90);g.lineTo(50,102);g.stroke();
+  const fig=(x,y)=>{g.beginPath();g.arc(x,y,7,0,7);g.fill();g.beginPath();g.moveTo(x-10,y+40);g.lineTo(x,y+10);g.lineTo(x+10,y+40);g.fill();g.fillRect(x-3,y+38,6,16);};
+  fig(34,140);g.beginPath();g.arc(64,160,11,0,7);g.lineWidth=4;g.stroke();
+  g.beginPath();g.arc(40,236,7,0,7);g.fill();g.fillRect(24,256,40,8);
+  return tex(c,false);
+}
+function pictoTex(){const [c,g]=cnv(256);g.fillStyle='#8c9097';g.fillRect(0,0,256,256);g.fillStyle='#fff';
+  const man=(x)=>{g.beginPath();g.arc(x,70,13,0,7);g.fill();g.fillRect(x-14,90,28,60);g.fillRect(x-12,150,10,55);g.fillRect(x+2,150,10,55);};
+  const wom=(x)=>{g.beginPath();g.arc(x,70,13,0,7);g.fill();g.beginPath();g.moveTo(x-8,90);g.lineTo(x+8,90);g.lineTo(x+24,160);g.lineTo(x-24,160);g.fill();g.fillRect(x-10,160,8,45);g.fillRect(x+2,160,8,45);};
+  man(80);wom(176);g.fillRect(126,60,4,150);return tex(c,false);}
+
+const TX = {
+  oak: oakTex(), oakD: oakTex('#b98f63','rgba(70,40,15,',9),
+  marble: marbleTex(), floor: marbleTex([132,136,140],[205,208,212],13,[1,2],'rgba(40,42,46,.6)',14),
+  cor: marbleTex([214,196,168],[178,152,120],21,[2,2],'rgba(120,95,70,.6)'),
+  tileW: gridTex('#f2f1ec','#c9c7c0',8,2), tileF: gridTex('#9ea2a4','#6f7275',6,3,0.08), tileC: gridTex('#c98e67','#9b6a4d',4,3,0.05),
+  conc: noiseTex('#bdb8ae',.12), blue: noiseTex('#2f63c4',.08,8), hatch: hatchTex(), sign: signTex(), picto: pictoTex()
+};
+TX.floor.repeat.set(1,1);
+
+/* ---------- geometry helpers ---------- */
+const SC=1/114.4, OX=505, OY=400;           // plan px (1:50 sheet, 130dpi render) -> metres
+const X=px=>(px-OX)*SC, Z=py=>(py-OY)*SC;
+const H=2.48;                                 // product height from drawing note
+const HC=2.1;                                 // model is shown cut horizontally at 2.1 m (section view)
+function boxGeo(w,h,d,ts=1){
+  const g=new THREE.BoxGeometry(w,h,d);const uv=g.attributes.uv;
+  const dims=[[d,h],[d,h],[w,d],[w,d],[w,h],[w,h]];
+  for(let f=0;f<6;f++)for(let i=0;i<4;i++){const k=f*4+i;uv.setXY(k,uv.getX(k)*dims[f][0]/ts,uv.getY(k)*dims[f][1]/ts);}
+  return g;
+}
+const layers = {base:new THREE.Group(),floor:new THREE.Group(),fix:new THREE.Group(),part:new THREE.Group(),wall:new THREE.Group()};
+Object.values(layers).forEach(g=>scene.add(g));
+const EXY = {base:0,floor:2.3,fix:3.05,part:4.1,wall:5.3};
+
+/* per-part material cache; looks: a(after) b(before) d(during) o(origin) */
+const matCache = {};
+function mat(part,key,make){const k=part+'|'+key;if(!matCache[k]){const m=make();m.userData.part=part;matCache[k]=m;}return matCache[k];}
+const ORIGIN_COL={cn:0xd9875e,jp:0x1f56b3,nt:0xd4d0c8};
+function originMat(part,transparent=false){return mat(part,'o'+(transparent?'t':''),()=>{const o=PARTS[part].o;
+  const m=new THREE.MeshStandardMaterial({color:ORIGIN_COL[o],roughness:.55,metalness:0});
+  if(o==='jp'){m.emissive.setHex(0x163f8a);m.emissiveIntensity=.55;}
+  if(transparent){m.transparent=true;m.opacity=.55;} if(o==='nt'){m.roughness=.9;} return m;});}
+const std=(o)=>new THREE.MeshStandardMaterial(o);
+const LOOK = {
+  wallOak:  p=>({a:mat(p,'oak',()=>std({map:TX.oak,roughness:.62})), b:mat(p,'tile',()=>std({map:TX.tileW,roughness:.35})), d:null}),
+  wallMarb: p=>({a:mat(p,'marb',()=>std({map:TX.marble,roughness:.28})), b:mat(p,'tile',()=>std({map:TX.tileW,roughness:.35})), d:null}),
+  corWall:  p=>({a:mat(p,'white',()=>std({color:0xf7f6f2,roughness:.3})), b:mat(p,'beige',()=>std({color:0xece4d4,roughness:.8})), d:mat(p,'white',()=>std({color:0xf7f6f2,roughness:.3}))}),
+  floor:    p=>({a:mat(p,'fl',()=>std({map:TX.floor,roughness:.16})), b:mat(p,'flb',()=>std({map:TX.tileF,roughness:.6})), d:mat(p,'conc',()=>std({map:TX.conc,roughness:.95}))}),
+  corfloor: p=>({a:mat(p,'cf',()=>std({map:TX.cor,roughness:.35})), b:mat(p,'cfb',()=>std({map:TX.tileC,roughness:.55})), d:mat(p,'blue',()=>std({map:TX.blue,roughness:.7}))}),
+  partition:p=>({a:mat(p,'oakD',()=>std({map:TX.oakD,roughness:.55})), b:mat(p,'pb',()=>std({color:0xd8cfbf,roughness:.7})), d:null}),
+  ceramic:  p=>({a:mat(p,'cer',()=>std({color:0xfbfbf9,roughness:.12})), b:mat(p,'ivory',()=>std({color:0xeee2c6,roughness:.25})), d:null}),
+  ceramicA: p=>({a:mat(p,'cer',()=>std({color:0xfbfbf9,roughness:.12})), b:null, d:null}),
+  chrome:   p=>({a:mat(p,'chr',()=>std({color:0xe8ecef,roughness:.12,metalness:1})), b:null, d:null}),
+  counter:  p=>({a:mat(p,'ctop',()=>std({map:TX.marble,roughness:.18})), b:null, d:null}),
+  cabinet:  p=>({a:mat(p,'cab',()=>std({map:TX.oak,color:0xf0e2cc,roughness:.6})), b:null, d:null}),
+  basin:    p=>({a:mat(p,'bas',()=>std({color:0xe9ebec,roughness:.1})), b:null, d:null}),
+  mirror:   p=>({a:mat(p,'mir',()=>std({color:0xb9c3cb,roughness:.04,metalness:1})), b:null, d:null}),
+  led:      p=>({a:mat(p,'led',()=>std({color:0xffffff,emissive:0xfff7e8,emissiveIntensity:1.6})), b:null, d:null}),
+  ledWarm:  p=>({a:mat(p,'ledw',()=>std({color:0xffe2b0,emissive:0xffc978,emissiveIntensity:1.3})), b:null, d:null}),
+  glass:    p=>({a:mat(p,'gl',()=>{const m=new THREE.MeshPhysicalMaterial({color:0xeef6ff,roughness:.08,metalness:0,transparent:true,opacity:.42,iridescence:1,iridescenceIOR:1.45,iridescenceThicknessRange:[180,900],side:THREE.DoubleSide});return m;}), b:null, d:null, ot:true}),
+  black:    p=>({a:mat(p,'blk',()=>std({color:0x1d1f22,roughness:.5,metalness:.4})), b:null, d:null}),
+  steel:    p=>({a:mat(p,'stl',()=>std({color:0xd9dcdf,roughness:.25,metalness:.9})), b:mat(p,'stlb',()=>std({color:0xeae3cf,roughness:.4})), d:null}),
+  sign:     p=>({a:mat(p,'sg',()=>std({map:TX.sign,roughness:.5})), b:null, d:null}),
+  pink:     p=>({a:mat(p,'pk',()=>std({color:0xd4246b,roughness:.5})), b:null, d:null}),
+  picto:    p=>({a:mat(p,'pc',()=>std({map:TX.picto,roughness:.5,side:THREE.DoubleSide})), b:null, d:null}),
+  grey:     p=>({a:mat(p,'gr',()=>std({color:0x8c9097,roughness:.5})), b:null, d:null}),
+  heater:   p=>({a:mat(p,'ht',()=>std({color:0xf2f2ef,roughness:.35})), b:null, d:null}),
+  cap:      p=>({a:mat(p,'cap',()=>std({color:0x2a3b55,roughness:.8})), b:mat(p,'cap',()=>std({color:0x2a3b55,roughness:.8})), d:null}),
+  stud:     p=>({a:mat(p,'stud',()=>std({color:0x9aa1a8,roughness:.4,metalness:.7})), b:'same', d:'same', always:true}),
+  slab:     p=>({a:mat(p,'slab',()=>std({color:0xdcd8cf,roughness:.95})), b:'same', d:'same', always:true, noOrigin:true}),
+  pipeG:    p=>({a:mat(p,'pg',()=>std({color:0x9aa3ab,roughness:.5})), b:null, d:'same', dOnly:true}),
+  pipeB:    p=>({a:mat(p,'pbl',()=>std({color:0x3b6fb6,roughness:.4})), b:null, d:'same', dOnly:true}),
+};
+const pickables=[]; const partMeshes={corwall:[]}; ORDER.forEach(k=>partMeshes[k]=[]);
+function add(geo,look,part,pos,opt={}){
+  const lk=LOOK[look](part);
+  const m=new THREE.Mesh(geo,lk.a);
+  m.position.set(pos[0],pos[1],pos[2]); if(opt.ry) m.rotation.y=opt.ry; if(opt.rx) m.rotation.x=opt.rx; if(opt.rz) m.rotation.z=opt.rz;
+  if(opt.s) m.scale.set(...opt.s);
+  m.castShadow=opt.cast!==false; m.receiveShadow=true;
+  m.userData={part,look:lk,dOnly:!!lk.dOnly,always:!!lk.always,ot:!!lk.ot,noOrigin:!!lk.noOrigin};
+  (opt.parent||layers[PARTS[part].layer]).add(m);
+  pickables.push(m); partMeshes[part].push(m);
+  return m;
+}
+
+/* ---------- build: structure ---------- */
+// model plinth (not pickable)
+const plinth=new THREE.Mesh(boxGeo(10.2,0.28,8.6),std({color:0xf7f5f0,roughness:.9}));
+plinth.position.set(X(505),-0.34,Z(395));plinth.receiveShadow=true;scene.add(plinth);
+const shadowPlane=new THREE.Mesh(new THREE.PlaneGeometry(60,60),new THREE.ShadowMaterial({opacity:.12}));
+shadowPlane.rotation.x=-Math.PI/2;shadowPlane.position.y=-0.481;shadowPlane.receiveShadow=true;scene.add(shadowPlane);
+add(boxGeo(X(980)-X(36),0.2,Z(778)-Z(18),1),'slab','base',[ (X(980)+X(36))/2,-0.1,(Z(778)+Z(18))/2 ],{cast:false});
+
+// out-of-scope masses (section cut, not pickable)
+function mass(x1,y1,x2,y2,h=1.0){const w=X(x2)-X(x1),d=Z(y2)-Z(y1);
+  const m=new THREE.Mesh(new THREE.BoxGeometry(w,h,d),[std({color:0xf4f2ed,roughness:.9}),std({color:0xf4f2ed,roughness:.9}),std({map:TX.hatch,roughness:1}),std({color:0xf4f2ed}),std({color:0xf4f2ed,roughness:.9}),std({color:0xf4f2ed,roughness:.9})]);
+  m.position.set((X(x1)+X(x2))/2,h/2,(Z(y1)+Z(y2))/2);m.castShadow=m.receiveShadow=true;scene.add(m);}
+mass(206,666,500,774,1.0);
+
+/* ---------- walls ---------- */
+const studPos=[];
+function wall(x1,y1,x2,y2,look,part='wall',t=0.1,h=HC,y0=0){
+  const horiz=(y1===y2);const len=horiz?Math.abs(X(x2)-X(x1)):Math.abs(Z(y2)-Z(y1));
+  const g=horiz?boxGeo(len+t,h,t,1.2):boxGeo(t,h,len+t,1.2);
+  const cx=(X(x1)+X(x2))/2,cz=(Z(y1)+Z(y2))/2;
+  const m=add(g,look,part,[cx,y0+h/2,cz]);
+  add(horiz?new THREE.BoxGeometry(len+t,0.012,t):new THREE.BoxGeometry(t,0.012,len+t),'cap',part,[cx,y0+h+0.006,cz],{cast:false});
+  if(part==='wall'){for(let s=0;s<=len;s+=0.455){studPos.push(horiz?[Math.min(X(x1),X(x2))+s,cz,0]:[cx,Math.min(Z(y1),Z(y2))+s,1]);}
+    runners.push([cx,cz,horiz?len:t,horiz?t:len]);}
+  return m;
+}
+const runners=[];
+// men's
+wall(305,22,615,22,'wallOak');
+wall(301,22,301,298,'wallMarb','wall',0.18);
+wall(185,298,301,298,'wallOak');
+wall(185,298,185,310,'wallOak'); wall(185,415,185,535,'wallOak');
+wall(185,535,495,535,'wallOak');
+wall(495,472,495,535,'wallOak');
+wall(490,472,640,472,'wallOak');
+wall(623,22,623,472,'wallOak','wall',0.2);
+// women's
+wall(633,22,965,22,'wallOak'); wall(965,22,965,662,'wallOak');
+wall(815,662,965,662,'wallOak'); wall(815,662,815,762,'wallOak');
+wall(505,762,815,762,'wallOak');
+wall(505,472,505,555,'wallOak'); wall(505,660,505,762,'wallOak');
+// multipurpose
+wall(48,45,290,45,'wallOak'); wall(48,45,48,298,'wallOak');
+wall(48,298,110,298,'wallOak'); wall(205,298,290,298,'wallOak');
+// corridor (existing-type walls, neutral)
+PARTS.corwall={o:'nt',layer:'wall'};
+wall(42,298,42,774,'corWall','corwall');
+wall(200,535,200,545,'corWall','corwall');
+// studs + runners (instanced, part = base)
+{
+  const g=new THREE.BoxGeometry(0.045,HC-0.06,0.075);const lk=LOOK.stud('base');
+  const im=new THREE.InstancedMesh(g,lk.a,studPos.length);const o=new THREE.Object3D();
+  studPos.forEach((p,i)=>{if(p[2]===0){o.position.set(p[0],HC/2,p[1]);o.rotation.y=0;}else{o.position.set(p[0],HC/2,p[1]);o.rotation.y=Math.PI/2;}o.updateMatrix();im.setMatrixAt(i,o.matrix);});
+  im.castShadow=true;im.receiveShadow=true;im.userData={part:'base',look:lk,always:true};layers.base.add(im);pickables.push(im);partMeshes.base.push(im);
+  runners.forEach(r=>{[0.02,HC-0.02].forEach(y=>add(new THREE.BoxGeometry(r[2]+0.02,0.04,r[3]+0.02),'stud','base',[r[0],y,r[1]]));});
+}
+
+/* ---------- floors ---------- */
+function floorRect(x1,y1,x2,y2,part,look){const w=X(x2)-X(x1),d=Z(y2)-Z(y1);
+  const ts=part==='floor'?1.2:0.91;return add(boxGeo(w,0.03,d,ts),look,part,[(X(x1)+X(x2))/2,0.015,(Z(y1)+Z(y2))/2],{cast:false});}
+[[305,22,490,305],[190,305,490,535],[490,22,618,472],[628,22,965,472],[505,472,815,762],[815,472,965,662],[48,45,290,298]]
+  .forEach(r=>floorRect(...r,'floor','floor'));
+[[42,298,200,774],[200,540,505,662]].forEach(r=>floorRect(...r,'corfloor','corfloor'));
+
+/* ---------- partitions (booths) ---------- */
+function panel(x1,y1,x2,y2,look,part,t=0.035,h=HC-0.01,y0=0.0){const horiz=(y1===y2);
+  const len=horiz?Math.abs(X(x2)-X(x1)):Math.abs(Z(y2)-Z(y1));
+  add(horiz?new THREE.BoxGeometry(len,0.012,t):new THREE.BoxGeometry(t,0.012,len),'cap',part,[(X(x1)+X(x2))/2,y0+h+0.006,(Z(y1)+Z(y2))/2],{cast:false});
+  return add(horiz?boxGeo(len,h,t,1.2):boxGeo(t,h,len,1.2),look,part,[(X(x1)+X(x2))/2,y0+h/2,(Z(y1)+Z(y2))/2]);}
+// men's booths: front line x=490 with 3 doors (closet, booth1, booth2)
+panel(490,22,490,472,'partition','partition');
+panel(490,135,618,135,'partition','partition'); panel(490,243,618,243,'partition','partition');
+// women's booths x=840
+panel(840,22,840,662,'partition','partition');
+[130,237,450].forEach(y=>panel(840,y,960,y,'partition','partition'));
+// door leaf lines (thin dark reveals)
+function doorLine(xpx,y1,y2){[y1,y2].forEach(y=>add(new THREE.BoxGeometry(0.045,2.05,0.012),'black','partition',[X(xpx)-0.004,1.035,Z(y)]));
+  add(new THREE.BoxGeometry(0.02,0.12,0.03),'steel','partition',[X(xpx)-0.03,1.0,Z(y2)-0.08]);}
+doorLine(490,36,100); doorLine(490,150,228); doorLine(490,390,455);
+doorLine(840,32,100); doorLine(840,150,224); doorLine(840,380,440); doorLine(840,462,522);
+
+/* ---------- fixtures: toilets ---------- */
+function toilet(xpx,ypx,dir,part='toilet'){ // dir: angle so that user faces direction; tank at back
+  const g=new THREE.Group(); g.position.set(X(xpx),0,Z(ypx)); g.rotation.y=dir; layers.fix.add(g);
+  const o={parent:g};
+  add(new THREE.CylinderGeometry(0.15,0.12,0.36,24),'ceramic',part,[0,0.18,0.28],{...o,s:[1,1,1.35]});
+  add(new THREE.CylinderGeometry(0.19,0.17,0.06,28),'ceramic',part,[0,0.39,0.3],{...o,s:[1,1,1.3]});
+  add(new THREE.BoxGeometry(0.42,0.36,0.17),'ceramic',part,[0,0.6,0.07],o);
+  add(new THREE.BoxGeometry(0.44,0.04,0.19),'ceramic',part,[0,0.8,0.07],o);
+  add(new THREE.BoxGeometry(0.05,0.1,0.14),'steel',part,[0.3,0.62,0.36],o); // paper holder / remote
+  return g;
+}
+// men's booth1 tank at y243 facing north; booth2 tank at y243 facing south
+toilet(554,240,Math.PI); toilet(554,246,0);
+// women's
+toilet(902,133,0); toilet(902,240,0); toilet(902,659,Math.PI);
+// multipurpose (TOTO part = mp)
+toilet(215,48,0,'mp');
+
+/* urinals + screens */
+[65,155,245].forEach((y,i)=>{
+  const cx=X(301)+0.09+0.17, cz=Z(y);
+  add(new THREE.CapsuleGeometry(0.17,0.42,6,18),'ceramic','urinal',[cx,0.68,cz],{s:[0.85,1,1]});
+  add(new THREE.BoxGeometry(0.05,0.1,0.05),'chrome','urinal',[X(301)+0.12,1.2,cz]);
+  if(i===2){ // handrail on the urinal nearest the entrance
+    [-0.3,0.3].forEach(dz=>{add(new THREE.BoxGeometry(0.55,0.035,0.035),'steel','urinal',[X(301)+0.37,0.85,cz+dz]);
+      add(new THREE.BoxGeometry(0.035,0.5,0.035),'steel','urinal',[X(301)+0.63,0.6,cz+dz]);});
+  }
+});
+[110,200].forEach(y=>{const x0=X(301)+0.09,len=0.5,cz=Z(y);
+  add(new THREE.BoxGeometry(len,1.95,0.018),'glass','screen',[x0+len/2,0.15+0.975,cz],{cast:false});
+  add(new THREE.BoxGeometry(0.03,1.95,0.035),'black','screen',[x0+len,0.15+0.975,cz]);
+  add(new THREE.BoxGeometry(len,0.03,0.035),'black','screen',[x0+len/2,2.1,cz]);
+  add(new THREE.BoxGeometry(len,0.03,0.035),'black','screen',[x0+len/2,0.15,cz]);
+});
+
+/* vanities */
+const CT=0.8;
+function vanity(ax,ay,bx,by,depth,basins,facing){ // facing: 'n' (user north of counter) or 'e'
+  const horiz=facing==='n';
+  const len=horiz?X(bx)-X(ax):Z(by)-Z(ay);
+  const cx=(X(ax)+X(bx))/2, cz=(Z(ay)+Z(by))/2;
+  const w=horiz?len:depth, d=horiz?depth:len;
+  add(boxGeo(w,0.05,d,0.9),'counter','vanity',[cx,CT-0.025,cz]);
+  add(boxGeo(horiz?w:0.02,CT-0.15,horiz?0.02:d,0.9),'cabinet','vanity',[horiz?cx:cx+depth/2-0.03,(CT-0.05)/2+0.1-0.025,horiz?cz-depth/2+0.03:cz]);
+  basins.forEach(b=>{
+    const bx_=horiz?X(b):cx+0.02, bz_=horiz?cz+0.02:Z(b);
+    add(new THREE.BoxGeometry(horiz?0.44:0.32,0.012,horiz?0.32:0.44),'basin','vanity',[bx_,CT+0.002,bz_],{cast:false});
+    // faucet + soap at back edge
+    const fx=horiz?bx_:cx-depth/2+0.08, fz=horiz?cz+depth/2-0.08:bz_;
+    add(new THREE.CylinderGeometry(0.018,0.022,0.2,12),'chrome','faucet',[fx,CT+0.1,fz]);
+    add(new THREE.BoxGeometry(horiz?0.03:0.12,0.025,horiz?0.12:0.03),'chrome','faucet',[horiz?fx:fx+0.05,CT+0.19,horiz?fz-0.05:fz]);
+    add(new THREE.CylinderGeometry(0.014,0.016,0.13,10),'chrome','faucet',[horiz?fx+0.14:fx,CT+0.065,horiz?fz:fz+0.14]);
+  });
+  // heater (under counter, illustrative)
+  add(new THREE.BoxGeometry(horiz?0.36:0.28,0.34,horiz?0.28:0.36),'heater','heater',[horiz?X(ax)+0.45:cx+0.05,0.32,horiz?cz+0.05:Z(ay)+0.45]);
+}
+vanity(200,467,490,530,0.55,[258,350,445],'n');  // men's: counter along x, wall at south (y535)
+vanity(635,148,697,468,0.55,[210,298,412],'e');  // women's: along z, wall at west
+// fix orientation for men's: user stands north, back edge is south (wall). adjust faucet side: counter back is +z
+// LED mirrors
+function ledMirror(cx,cy,cz,w,h,axis){ // axis 'z' mirror faces -z (on south wall) ; 'x' faces +x
+  const t=0.03, g=axis==='z'?[w,h,t]:[t,h,w];
+  add(new THREE.BoxGeometry(...g),'mirror','mirror',[cx,cy,cz]);
+  const f=0.022,off=0.018,inset=0.06;
+  const bars=[[w-2*inset,f,0,h/2-inset],[w-2*inset,f,0,-h/2+inset],[f,h-2*inset,w/2-inset,0],[f,h-2*inset,-w/2+inset,0]];
+  bars.forEach(b=>{const [bw,bh,dx,dy]=b; if(axis==='z') add(new THREE.BoxGeometry(bw,bh,0.006),'led','mirror',[cx+dx,cy+dy,cz-off],{cast:false});
+    else add(new THREE.BoxGeometry(0.006,bh,bw),'led','mirror',[cx+off,cy+dy,cz+dx],{cast:false});});
+}
+[258,350,445].forEach(x=>ledMirror(X(x),1.5,Z(535)-0.07,0.62,0.95,'z'));
+[210,298,412].forEach(y=>ledMirror(X(635)+0.12,1.5,Z(y),0.62,0.95,'x'));
+// women's powder counter + long LED mirror (mirror = 'mirror' part, counter = 'powder')
+add(boxGeo(X(815)-X(507),0.05,0.5,0.9),'counter','powder',[(X(507)+X(815))/2,0.72,Z(762)-0.3]);
+add(new THREE.BoxGeometry(X(815)-X(507)-0.1,0.02,0.02),'ledWarm','powder',[(X(507)+X(815))/2,0.68,Z(762)-0.06],{cast:false});
+add(new THREE.BoxGeometry(X(815)-X(507)-0.1,0.3,0.02),'cabinet','powder',[(X(507)+X(815))/2,0.15,Z(762)-0.1]);
+ledMirror((X(507)+X(815))/2,1.42,Z(762)-0.07,2.3,0.72,'z');
+
+/* multipurpose fixtures (part mp) */
+{
+  const wx=X(125), wz=Z(45)+0.05;
+  add(new THREE.BoxGeometry(0.5,0.14,0.38),'ceramic','mp',[wx,0.76,wz+0.2]);
+  add(new THREE.CylinderGeometry(0.016,0.02,0.18,12),'chrome','mp',[wx,0.92,wz+0.07]);
+  add(new THREE.BoxGeometry(0.4,0.6,0.02),'mirror','mp',[wx,1.45,wz+0.01]);
+  // L handrail on right wall + flip-up rail
+  const rx=X(290)-0.1;
+  add(new THREE.BoxGeometry(0.035,0.035,0.7),'steel','mp',[rx,0.7,Z(48)+0.45]);
+  add(new THREE.BoxGeometry(0.035,0.8,0.035),'steel','mp',[rx,1.1,Z(48)+0.8]);
+  add(new THREE.BoxGeometry(0.035,0.035,0.7),'steel','mp',[X(215)-0.36,0.72,Z(48)+0.4]);
+  add(new THREE.BoxGeometry(0.035,0.3,0.035),'steel','mp',[X(215)-0.36,0.87,Z(48)+0.07]);
+  // heater for mp (illustrative, part heater)
+  add(new THREE.BoxGeometry(0.26,0.3,0.2),'heater','heater',[wx+0.45,0.4,wz+0.12]);
+}
+
+/* signage */
+{
+  // pink pillar at corridor corner + grey sail sign at the entrance
+  const px=X(208), pz=Z(548);
+  add(new THREE.BoxGeometry(0.22,2.3,0.42),'pink','signage',[px,1.15,pz]);
+  const face=add(new THREE.PlaneGeometry(0.42,2.3),'sign','signage',[px-0.112,1.15,pz],{ry:-Math.PI/2,cast:false});
+  const sh=new THREE.Shape();sh.moveTo(0,0);sh.lineTo(0.9,0);sh.quadraticCurveTo(0.35,1.0,0.12,2.25);sh.lineTo(0,2.25);sh.lineTo(0,0);
+  const sg=new THREE.ExtrudeGeometry(sh,{depth:0.04,bevelEnabled:false});
+  const sail=add(sg,'grey','signage',[X(200)+0.02,0.05,Z(770)],{ry:Math.PI/2});
+  add(new THREE.PlaneGeometry(0.34,0.34),'picto','signage',[X(200)+0.015,1.2,Z(770)-0.2],{ry:-Math.PI/2,cast:false});
+  // small plates at men's / women's entrances
+  add(new THREE.BoxGeometry(0.02,0.3,0.3),'grey','signage',[X(185)-0.07,1.6,Z(430)]);
+  add(new THREE.BoxGeometry(0.02,0.3,0.3),'pink','signage',[X(505)-0.07,1.6,Z(675)]);
+}
+
+/* pipes (during) */
+function pipe(x,z){add(new THREE.CylinderGeometry(0.05,0.05,0.32,12),'pipeG','base',[x,0.16,z]);add(new THREE.CylinderGeometry(0.014,0.014,0.9,8),'pipeB','base',[x+0.12,0.45,z]);}
+[65,155,245].forEach(y=>pipe(X(301)+0.14,Z(y)));
+[258,350,445].forEach(x=>pipe(X(x),Z(535)-0.12));
+[210,298,412].forEach(y=>pipe(X(635)+0.12,Z(y)));
+[[554,230],[554,256],[902,143],[902,250],[902,649],[215,58]].forEach(p=>pipe(X(p[0]),Z(p[1])));
+
+/* =========================================================
+   STATE APPLICATION
+   ========================================================= */
+const exCur={base:0,floor:0,fix:0,part:0,wall:0};
+function applyLook(){
+  pickables.forEach(m=>{
+    const u=m.userData, lk=u.look, ph=S.phase;
+    let vis, mt;
+    if(u.always){vis=true; mt=lk.a;}
+    else if(u.dOnly){vis=(ph==='d')||S.ex; mt=lk.a;}
+    else if(ph==='a'){vis=true; mt=lk.a;}
+    else if(ph==='b'){vis=!!lk.b; mt=lk.b;}
+    else {vis=!!lk.d; mt=lk.d==='same'?lk.a:lk.d;}
+    if(S.origin && vis && !u.noOrigin && ph==='a') mt=originMat(u.part,u.ot);
+    if(lk.b==='same'&&ph==='b') mt=lk.a;
+    m.visible=vis; if(mt&&mt!=='same') m.material=mt;
+  });
+  highlight();
+}
+let hoverPart=null;
+function highlight(){
+  const see=S.sel==='heater';
+  ['vanity','powder'].forEach(p=>Object.values(matCache).forEach(m=>{ if(m.userData.part!==p) return;
+    if(m.transparent!==see && !m.userData.keepT){ m.transparent=see; m.opacity=see?0.22:1; m.depthWrite=!see; m.needsUpdate=true; } }));
+  Object.values(matCache).forEach(m=>{ if(!m.emissive) return;
+    const p=m.userData.part; const base=m.userData.baseEm??(m.userData.baseEm=m.emissive.getHex(), m.userData.baseEI=m.emissiveIntensity, m.userData.baseEm);
+    if(p===S.sel||p===hoverPart){ m.emissive.setHex(0xe6a86a); m.emissiveIntensity = p===S.sel?0.55:0.25; }
+    else { m.emissive.setHex(base); m.emissiveIntensity=m.userData.baseEI; }
+  });
+}
+
+/* =========================================================
+   UI
+   ========================================================= */
+function i18n(){
+  const t=L(); document.documentElement.lang = S.lang==='zh'?'zh-CN':'ja';
+  document.querySelectorAll('[data-i]').forEach(e=>{const v=t[e.dataset.i]; if(typeof v==='string') e.textContent=v;});
+  document.querySelectorAll('[data-i-html]').forEach(e=>{const v=t[e.dataset.iHtml]; if(typeof v==='string') e.innerHTML=v;});
+  $('#lg-a').textContent = S.lang==='ja'?'日本語':'中文'; $('#lg-b').textContent = S.lang==='ja'?'中文':'日本語';
+  $('#wechat').style.display = S.lang==='zh'?'':'none';
+  document.title = S.lang==='zh'?'车站商业设施 公共卫生间改修｜用 3D 模型看中日产品结合｜桜華国際':'駅商業施設 公共トイレ改修｜中国材 × TOTO を3D模型で見る｜桜華国際';
+  buildMenu(); buildLabels(); ui();
+}
+function buildMenu(){
+  const m=$('#menu'); m.innerHTML='';
+  [['cn','menuCN'],['jp','menuJP'],['nt','menuNT']].forEach(([o,k])=>{
+    const h=document.createElement('div');h.className='mh';h.textContent=L()[k];m.appendChild(h);
+    ORDER.filter(id=>PARTS[id].o===o).forEach(id=>{const b=document.createElement('button');b.setAttribute('role','menuitem');b.dataset.id=id;
+      b.innerHTML=`<i class="dot ${o}"></i>${P(id).n}`; b.onclick=()=>{select(id,true); if(isMobile) toggleMenu(false);}; m.appendChild(b);});
+  });
+}
+function toggleMenu(v){S.menu=v??!S.menu;$('#menu').classList.toggle('on',S.menu);$('#b-menu').setAttribute('aria-expanded',S.menu);}
+function seg(id,val){document.querySelectorAll(`#${id} button`).forEach(b=>b.classList.toggle('on',b.dataset.v===val));}
+function ui(){
+  const t=L(); const c=counts();
+  seg('seg-phase',S.phase); seg('seg-origin',S.origin?'o':'f'); seg('seg-ex',S.ex?'1':'0');
+  $('#s-phase').textContent=phaseName(S.phase);
+  $('#s-view').textContent=S.ex?t.vEx:(S.origin?t.vo:t.vf);
+  $('#s-part').textContent=S.sel?P(S.sel).n:'—';
+  const ro=$('#readout'); ro.classList.toggle('on',S.origin);
+  ro.innerHTML=t.readout+`<small>${t.readoutSm(c.cn,c.jp,c.nt)}</small>`;
+  $('#legend').classList.toggle('on',S.origin); $('#foot').classList.toggle('hide',S.origin);
+  // explanation
+  let w='';
+  if(S.ex) w=t.why.x; else if(S.origin) w=t.why.o(c.cn,c.jp); else w=t.why[S.phase];
+  if(S.auto && (S.ex||S.origin)) w+=t.why.autoA;
+  if(S.sel){ w = t.why.sel(P(S.sel).n,originName(PARTS[S.sel].o)) + P(S.sel).w + ' ' + t.why.ph(phaseName(S.pphase||S.phase)); }
+  $('#why').textContent=w;
+  document.querySelectorAll('#menu button').forEach(b=>b.classList.toggle('on',b.dataset.id===S.sel));
+  labelsEl.style.display=S.ex?'':'none';
+  renderCard(); syncURL();
+}
+function syncURL(){
+  const q=new URLSearchParams();
+  if(S.lang==='zh')q.set('lang','zh'); if(S.sel)q.set('part',S.sel); if(S.phase!=='a')q.set('phase',S.phase);
+  if(S.origin)q.set('view','origin'); else if(S.ex)q.set('view','ex');
+  history.replaceState(null,'',location.pathname+(q.toString()?'?'+q:''));
+}
+function setPhase(p){ S.phase=p; S.pphase=p; S.pidx=0; if(p!=='a'){S.origin=false;S.ex=false;} S.auto=false; applyLook(); ui(); }
+function setOrigin(v){ S.origin=v; S.auto = v && S.phase!=='a'; if(v){S.phase='a';} applyLook(); ui(); }
+function setEx(v){ S.ex=v; S.auto = v && S.phase!=='a'; if(v){S.phase='a';} applyLook(); ui(); frame(S.sel,true); }
+
+/* ---------- part card ---------- */
+const card=$('#pcard');
+function photosFor(id,ph){return PARTS[id].ph[ph]||[];}
+function renderCard(){
+  if(!S.sel){card.classList.remove('on');card.setAttribute('aria-hidden','true');return;}
+  card.classList.add('on');card.setAttribute('aria-hidden','false');
+  const p=P(S.sel), o=PARTS[S.sel].o;
+  const bd=$('#pc-badge'); bd.className='badge '+o; bd.textContent=originName(o);
+  $('#pc-title').textContent=p.t; $('#pc-mat').textContent=p.m; $('#pc-why').textContent=p.w;
+  const nt=$('#pc-note'); nt.hidden=!p.note; nt.textContent=p.note||'';
+  let ph=S.pphase||S.phase;
+  document.querySelectorAll('#seg-pphase button').forEach(b=>{const n=photosFor(S.sel,b.dataset.v).length;
+    b.classList.toggle('on',b.dataset.v===ph); b.querySelector('.n').textContent=n?n:'–'; b.style.opacity=n?1:.55;});
+  const list=photosFor(S.sel,ph); const v=$('#viewer'); const th=$('#thumbs');
+  if(S.pidx>=list.length) S.pidx=0;
+  if(!list.length){ v.innerHTML=`<div class="empty">${L().noPhoto}</div>`; th.innerHTML=''; $('#pc-cap').textContent=''; return; }
+  const id=list[S.pidx];
+  v.innerHTML=`<img src="assets/${id}.jpg" alt="${PH[id][S.lang]}" decoding="async"><span class="tag">${phaseName(ph)} · ${L().photoOf(S.pidx+1,list.length)}</span>`+
+    (list.length>1?`<button class="nav l" aria-label="prev">‹</button><button class="nav r" aria-label="next">›</button>`:'');
+  v.querySelector('img').onclick=()=>openLB(id);
+  if(list.length>1){v.querySelector('.l').onclick=()=>{S.pidx=(S.pidx-1+list.length)%list.length;renderCard();};v.querySelector('.r').onclick=()=>{S.pidx=(S.pidx+1)%list.length;renderCard();};}
+  $('#pc-cap').textContent=PH[id][S.lang];
+  th.innerHTML=''; list.forEach((pid,i)=>{const b=document.createElement('button');b.className=i===S.pidx?'on':'';b.innerHTML=`<img src="assets/${pid}_s.jpg" alt="" loading="lazy">`;b.onclick=()=>{S.pidx=i;renderCard();};th.appendChild(b);});
+  // swipe
+  let sx=null; v.ontouchstart=e=>{sx=e.touches[0].clientX}; v.ontouchend=e=>{if(sx==null)return;const dx=e.changedTouches[0].clientX-sx;sx=null;if(Math.abs(dx)>40&&list.length>1){S.pidx=(S.pidx+(dx<0?1:-1)+list.length)%list.length;renderCard();}};
+}
+document.querySelectorAll('#seg-pphase button').forEach(b=>b.onclick=()=>{S.pphase=b.dataset.v;S.pidx=0;
+  // keep the model in sync with the photo phase (same control, second entry point)
+  if(S.phase!==b.dataset.v){S.phase=b.dataset.v; if(S.phase!=='a'){S.origin=false;S.ex=false;} applyLook();}
+  ui();});
+$('#pc-close').onclick=()=>select(null);
+function select(id,fly=false){
+  S.sel=id; S.pidx=0; S.pphase = id? (photosFor(id,S.phase).length?S.phase:(['a','d','b'].find(p=>photosFor(id,p).length)||S.phase)) : null;
+  highlight(); ui(); resize(); if(id&&fly) frame(id); if(!id) frame(null);
+}
+function openLB(id){const lb=$('#lb');lb.querySelector('img').src=`assets/${id}.jpg`;lb.querySelector('p').textContent=PH[id][S.lang];lb.classList.add('on');}
+$('#lb-close').onclick=()=>$('#lb').classList.remove('on');
+$('#lb').onclick=e=>{if(e.target.id==='lb')$('#lb').classList.remove('on');};
+
+/* ---------- controls wiring (multiple entry points) ---------- */
+document.querySelectorAll('#seg-phase button').forEach(b=>b.onclick=()=>setPhase(b.dataset.v));
+document.querySelectorAll('#seg-origin button').forEach(b=>b.onclick=()=>setOrigin(b.dataset.v==='o'));
+document.querySelectorAll('#seg-ex button').forEach(b=>b.onclick=()=>setEx(b.dataset.v==='1'));
+$('#st-phase').onclick=()=>setPhase({b:'d',d:'a',a:'b'}[S.phase]);
+$('#st-view').onclick=()=>{ if(!S.origin&&!S.ex) setOrigin(true); else if(S.origin){S.origin=false;setEx(true);} else setEx(false); };
+$('#st-part').onclick=()=>toggleMenu();
+$('#b-menu').onclick=()=>toggleMenu();
+$('#b-how').onclick=()=>$('#how').showModal();
+$('#how-close').onclick=()=>$('#how').close();
+$('#how').addEventListener('click',e=>{if(e.target.id==='how')$('#how').close();});
+$('#b-lang').onclick=()=>{S.lang=S.lang==='ja'?'zh':'ja';localStorage.setItem('ouka-lang',S.lang);i18n();};
+$('#b-share').onclick=async()=>{const url=location.href;
+  try{ if(navigator.share&&isMobile){await navigator.share({title:L().share,url});return;} await navigator.clipboard.writeText(url); toast(L().toast);}catch(e){ toast(url); }};
+function toast(s){const t=$('#toast');t.textContent=s;t.classList.add('on');clearTimeout(toast._t);toast._t=setTimeout(()=>t.classList.remove('on'),1800);}
+addEventListener('keydown',e=>{
+  if(e.target.closest&&e.target.closest('input,textarea'))return; if(e.metaKey||e.ctrlKey||e.altKey)return;
+  const k=e.key.toLowerCase();
+  if(k==='1')setPhase('b'); else if(k==='2')setPhase('d'); else if(k==='3')setPhase('a');
+  else if(k==='o')setOrigin(!S.origin); else if(k==='x')setEx(!S.ex);
+  else if(k==='l')$('#b-lang').click(); else if(k==='r'){select(null);} else if(k==='h'||k==='?')$('#how').showModal();
+  else if(k==='escape'){ if($('#lb').classList.contains('on'))$('#lb').classList.remove('on'); else if(S.menu)toggleMenu(false); else select(null);}
+  else if(k==='arrowright'&&S.sel){const l=photosFor(S.sel,S.pphase||S.phase);if(l.length){S.pidx=(S.pidx+1)%l.length;renderCard();}}
+  else if(k==='arrowleft'&&S.sel){const l=photosFor(S.sel,S.pphase||S.phase);if(l.length){S.pidx=(S.pidx-1+l.length)%l.length;renderCard();}}
+});
+
+/* ---------- exploded labels ---------- */
+const labelsEl=$('#labels'); let labelEls={};
+const LBL_ORDER=['wall','part','fix','floor','base'];
+function buildLabels(){labelsEl.innerHTML='';labelEls={};LBL_ORDER.forEach(k=>{const d=document.createElement('div');d.className='lbl';
+  const col=k==='fix'?'':(k==='base'?'':'cn');d.innerHTML=`${k==='fix'?'<i class="dot cn"></i><i class="dot jp"></i>':`<i class="dot ${col}"></i>`}<span>${L().exL[k][0]}</span><small>${L().exL[k][1]}</small>`;
+  labelsEl.appendChild(d);labelEls[k]=d;});}
+const LBL_Y={wall:1.2,part:1.2,fix:0.8,floor:0.03,base:1.0};
+const tmpV=new THREE.Vector3();
+function updateLabels(){
+  if(!S.ex&&exCur.wall<0.05){return;}
+  const r=renderer.domElement.getBoundingClientRect();
+  let best=null,bx=1e9; [[X(40),Z(20)],[X(970),Z(20)],[X(970),Z(775)],[X(40),Z(775)]].forEach(c=>{tmpV.set(c[0],1.5,c[1]).project(camera);if(tmpV.x<bx){bx=tmpV.x;best=c;}});
+  LBL_ORDER.forEach(k=>{const e=labelEls[k];tmpV.set(best[0],LBL_Y[k]+layers[k].position.y,best[1]);
+    tmpV.project(camera);const x=(tmpV.x*.5+.5)*r.width-18,y=(-tmpV.y*.5+.5)*r.height;
+    const minX=innerWidth>760?document.querySelector('.side').getBoundingClientRect().right+e.offsetWidth+30:e.offsetWidth+30;
+    e.style.left=Math.max(x,minX)+'px';e.style.top=y+'px';e.style.opacity=S.ex&&exCur.wall>0.6?1:0;});
+}
+
+/* ---------- camera framing ---------- */
+const CAM={tgt:new THREE.Vector3(),pos:new THREE.Vector3(),t:1,fromT:new THREE.Vector3(),fromP:new THREE.Vector3()};
+function dirVec(az,el,dist){const a=az*Math.PI/180,e=el*Math.PI/180;return new THREE.Vector3(Math.cos(e)*Math.sin(a),Math.sin(e),Math.cos(e)*Math.cos(a)).multiplyScalar(dist);}
+const HOME_AZ=148;
+function homeDist(){const asp=camera.aspect;const fov=camera.fov*Math.PI/180;const halfW=isMobile?4.6:5.4;const halfH=3.4;
+  const dW=halfW/(Math.tan(fov/2)*asp), dH=halfH/Math.tan(fov/2); return Math.max(dW,dH)*(isMobile?1.13:1.55);}
+function frame(id,keep=false){
+  let tgt,pos;
+  if(!id||PARTS[id].view==='home'){ tgt=new THREE.Vector3(X(505),S.ex?3.3:0.5,Z(400)); pos=tgt.clone().add(dirVec(HOME_AZ,S.ex?26:52,homeDist()*(S.ex?1.45:1))); }
+  else if(PARTS[id].focus){ const f=PARTS[id].focus; tgt=new THREE.Vector3(X(f[0]),f[2],Z(f[1])); pos=tgt.clone().add(dirVec(f[3],f[4],f[5]*(innerWidth<=760?1.45:1))); }
+  else{
+    const box=new THREE.Box3(); partMeshes[id].forEach(m=>{if(m.isInstancedMesh){box.expandByPoint(new THREE.Vector3(X(40),0,Z(20)));box.expandByPoint(new THREE.Vector3(X(970),2.4,Z(775)));} else box.expandByObject(m);});
+    if(box.isEmpty()) return; tgt=box.getCenter(new THREE.Vector3());
+    const [az,el,dist]=PARTS[id].view; const size=box.getSize(new THREE.Vector3()).length();
+    const d=Math.max(dist, Math.min(size*1.1, homeDist()*0.95)) * (innerWidth<=760?1.5:1);
+    pos=tgt.clone().add(dirVec(az,el,d));
+  }
+  CAM.fromT.copy(controls.target); CAM.fromP.copy(camera.position); CAM.tgt.copy(tgt); CAM.pos.copy(pos); CAM.t=0;
+}
+
+/* ---------- picking ---------- */
+const ray=new THREE.Raycaster(); const ndc=new THREE.Vector2(); let down=null;
+function pick(e){const r=renderer.domElement.getBoundingClientRect();ndc.set(((e.clientX-r.left)/r.width)*2-1,-((e.clientY-r.top)/r.height)*2+1);
+  ray.setFromCamera(ndc,camera);const hits=ray.intersectObjects(pickables.filter(m=>m.visible&&isShown(m)),false);
+  for(const h of hits){const p=h.object.userData.part; if(p==='corwall') continue; if(PARTS[p]&&ORDER.includes(p)) return p;} return null;}
+function isShown(m){let o=m;while(o){if(!o.visible)return false;o=o.parent;}return true;}
+renderer.domElement.addEventListener('pointerdown',e=>{down=[e.clientX,e.clientY,performance.now()];});
+renderer.domElement.addEventListener('pointerup',e=>{ if(!down) return; const moved=Math.hypot(e.clientX-down[0],e.clientY-down[1]); down=null;
+  if(moved>7) return; const p=pick(e); if(S.menu) toggleMenu(false); if(p){ select(p===S.sel?null:p, p!==S.sel);} else if(S.sel) select(null);
+  hideHint(); });
+renderer.domElement.addEventListener('pointermove',e=>{ if(e.pointerType!=='mouse'||down) return; const p=pick(e); if(p!==hoverPart){hoverPart=p;highlight();renderer.domElement.classList.toggle('hover',!!p);} });
+controls.addEventListener('start',()=>{CAM.t=1;hideHint();});
+function hideHint(){const h=$('#hint');if(h)h.style.opacity=0;}
+
+/* ---------- resize / loop ---------- */
+function resize(){
+  const w=innerWidth,h=innerHeight; renderer.setSize(w,h,false); camera.aspect=w/h;
+  if(w<=760){ // shift the rendered view so the model sits between header and dock (or the open card)
+    const head=document.querySelector('.side').getBoundingClientRect().bottom;
+    const bottomEdge=S.sel? h-Math.min(h*0.6,560) : document.querySelector('.ctl').getBoundingClientRect().top;
+    const shift=(head-(h-bottomEdge))/2; camera.setViewOffset(w,h,0,-shift,w,h);
+  } else { camera.clearViewOffset(); }
+  camera.updateProjectionMatrix();
+}
+addEventListener('resize',()=>{resize();});
+// keep the part card below the control card on desktop (control card height varies with language / menu)
+new ResizeObserver(()=>{ if(innerWidth>760){ card.style.top=(document.querySelector('.ctl').getBoundingClientRect().bottom+10)+'px'; } else card.style.top=''; }).observe(document.querySelector('.ctl'));
+let lastT=performance.now();
+function loop(){
+  const now=performance.now(); const dt=Math.min((now-lastT)/1000,0.05); lastT=now;
+  // camera tween
+  if(CAM.t<1){CAM.t=Math.min(1,CAM.t+dt/0.9);const k=1-Math.pow(1-CAM.t,3);controls.target.lerpVectors(CAM.fromT,CAM.tgt,k);camera.position.lerpVectors(CAM.fromP,CAM.pos,k);}
+  // explode tween
+  for(const k in layers){const goal=S.ex?EXY[k]:0; exCur[k]+=(goal-exCur[k])*Math.min(1,dt*5); layers[k].position.y=exCur[k];}
+  // pulse selection
+  if(S.sel){const s=0.4+0.25*Math.sin(performance.now()/260);Object.values(matCache).forEach(m=>{if(m.userData.part===S.sel&&m.emissive)m.emissiveIntensity=s;});}
+  controls.update(); renderer.render(scene,camera); updateLabels();
+  requestAnimationFrame(loop);
+}
+
+/* ---------- boot ---------- */
+i18n(); applyLook(); resize();
+{ const tgt=new THREE.Vector3(X(505),0.5,Z(400)); controls.target.copy(tgt); camera.position.copy(tgt.clone().add(dirVec(HOME_AZ-40,40,homeDist()*1.4))); frame(S.sel,false); }
+$('#loading').remove(); loop();
+setTimeout(hideHint,9000);
+
+// test hooks (no side effects): screen position of a part, current state
+window.__app={S,select,setPhase,setOrigin,setEx,
+  screenOf(id,i=0){const box=new THREE.Box3();const ms=partMeshes[id].filter(m=>!m.isInstancedMesh&&m.visible);box.expandByObject(ms[Math.min(i,ms.length-1)]);const c=box.getCenter(new THREE.Vector3()).project(camera);return {x:(c.x*.5+.5)*innerWidth,y:(-c.y*.5+.5)*innerHeight};},
+  ready:true};
+
+</script>
+</body>
+</html>
